@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Generador de emparejamientos</string>
+    <string name="introduce_cantidad_de_jugadores">Introduce cantidad de jugadores</string>
+    <string name="siguiente">Siguiente</string>
+    <string name="texto_entrada">¡Bienvenido al generador de emparejamientos para una liga! \nIntroduzca el número de participantes arriba y haga click en \'Siguiente\'.</string>
+    <string name="calculating">Calculando los emparejamientos… \nEste proceso tardará más o menos dependiendo de la RAM y procesador que tenga tu smartphone.</string>
+    <string name="calculationPlaceholder">Aquí se mostrará la operación en curso.</string>
+    <string name="tiempo">Tiempo:</string>
+    <string name="elapsedTimePlaceholder">0s</string>
+    <string name="ronda">Ronda:</string>
+    <string name="generando_emparejamientos">Generando emparejamientos...</string>
+    <string name="rondaCounterPlaceholder">0</string>
+    <string name="buscar_ronda">Buscar ronda</string>
+    <string name="buscar_participante">Buscar partidos participante</string>
+    <string name="ver_tabla">Ver Tabla</string>
+    <string name="rondas">Rondas</string>
+    <string name="tabla_de_emparejamientos">Tabla de Emparejamientos</string>
+    <string name="setsHint">Num. Sets (1, 3, 5, etc.)</string>
+    <string name="firstSetsText">Al mejor de</string>
+    <string name="secondSetsText">sets.</string>
+    <string name="includeSetsResultsText">Incluir resultados de sets</string>
+    <string name="see_classification_text">Ver clasificación</string>
+    <string name="back">Atrás</string>
+</resources>
