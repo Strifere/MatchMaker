@@ -19,6 +19,7 @@ class LoadingActivity : AppCompatActivity() {
 
         val numJugadores = intent.getIntExtra("numJugadores", 0)
         val nombres = intent.getStringArrayExtra("nombres") ?: arrayOf()
+        val numSets = intent.getIntExtra("numSets", 1)
 
         val timerText = findViewById<TextView>(R.id.timerText)
         val linearProgressBar = findViewById<ProgressBar>(R.id.linearProgressBar)
@@ -39,10 +40,11 @@ class LoadingActivity : AppCompatActivity() {
                     numJugadores = numJugadores,
                     nombres = nombres,
                     tabla = tabla.map { it.toIntArray() }.toTypedArray(),
-                    bestOf = intent.getIntExtra("numSets", 1),
+                    bestOf = numSets,
                     includeSetResults = intent.getBooleanExtra("includeSetsResults", false)
                 )
-                intent.putExtra("tournament", tournament)
+                // Store the tournament in the singleton
+                TournamentApplication.setTournament(tournament)
                 startActivity(intent)
                 finish()
             }

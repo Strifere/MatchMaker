@@ -20,6 +20,7 @@ class NamesActivity : AppCompatActivity() {
         val namesContainer = findViewById<LinearLayout>(R.id.namesContainer)
 
         val numJugadores = intent.getIntExtra("numJugadores", 0)
+        val numSets = intent.getIntExtra("numSets", 1)
 
         // Create name input fields
         repeat(numJugadores) { index ->
@@ -65,7 +66,7 @@ class NamesActivity : AppCompatActivity() {
             val intent = Intent(this, LoadingActivity::class.java)
             intent.putExtra("numJugadores", numJugadores)
             intent.putExtra("nombres", nombres.toTypedArray())
-            intent.putExtra("numSets", intent.getIntExtra("numSets", 1))
+            intent.putExtra("numSets", numSets)
             intent.putExtra("includeSetsResults", intent.getBooleanExtra("includeSetsResults", false))
             startActivity(intent)
         }
