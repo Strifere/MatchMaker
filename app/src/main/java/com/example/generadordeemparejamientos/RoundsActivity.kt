@@ -154,7 +154,6 @@ class RoundsActivity : AppCompatActivity() {
         val roundTitle = cardView.findViewById<TextView>(R.id.roundTitle)
         val matchesContainer = cardView.findViewById<LinearLayout>(R.id.matchesContainer)
         val byeText = cardView.findViewById<TextView>(R.id.byeText)
-        val inputResultsButton = cardView.findViewById<Button>(R.id.inputResultsButton)
         var isShowingMatches = false
 
         roundTitle.text = "Ronda ${ronda.numero}"
@@ -183,7 +182,10 @@ class RoundsActivity : AppCompatActivity() {
                 resultView.text = resultText.toString()
                 resultView.visibility = View.VISIBLE
             }
-
+            val addMatchResultButton = matchView.findViewById<ImageButton>(R.id.addMatchResultButton)
+            addMatchResultButton.setOnClickListener {
+                showMatchInputDialog(ronda, player1, player2)
+            }
             matchesContainer.addView(matchView)
         }
 
@@ -193,65 +195,54 @@ class RoundsActivity : AppCompatActivity() {
         } else {
             byeText.visibility = View.GONE
         }
-        if (!isShowingMatches) inputResultsButton.visibility = View.GONE
-        inputResultsButton.setOnClickListener {
-            showResultsDialog(ronda)
-        }
-
         return cardView
     }
 
-    private fun showResultsDialog(ronda: Ronda) {
+    private fun showMatchInputDialog(ronda: Ronda, player1: String, player2: String) {
         val inflater = LayoutInflater.from(this)
         val dialogView = inflater.inflate(R.layout.dialog_input_results, null)
         val matchesContainer = dialogView.findViewById<LinearLayout>(R.id.resultsMatchesContainer)
 
-        for ((player1, player2) in ronda.emparejamientos) {
-            if (busquedaParticipante && player1 != tournament.nombres[currentPlayerIndex] && player2 != tournament.nombres[currentPlayerIndex]) {
-                continue
-            }
+        val matchInputView = inflater.inflate(R.layout.item_result_input, matchesContainer, false)
+        val player1Name = matchInputView.findViewById<TextView>(R.id.resultPlayer1Name)
+        val player2Name = matchInputView.findViewById<TextView>(R.id.resultPlayer2Name)
+        val player1Score = matchInputView.findViewById<EditText>(R.id.resultPlayer1Score)
+        val player2Score = matchInputView.findViewById<EditText>(R.id.resultPlayer2Score)
+        val setsContainer = matchInputView.findViewById<LinearLayout>(R.id.setsContainer)
 
-            val matchInputView = inflater.inflate(R.layout.item_result_input, matchesContainer, false)
-            val player1Name = matchInputView.findViewById<TextView>(R.id.resultPlayer1Name)
-            val player2Name = matchInputView.findViewById<TextView>(R.id.resultPlayer2Name)
-            val player1Score = matchInputView.findViewById<EditText>(R.id.resultPlayer1Score)
-            val player2Score = matchInputView.findViewById<EditText>(R.id.resultPlayer2Score)
-            val setsContainer = matchInputView.findViewById<LinearLayout>(R.id.setsContainer)
+        player1Name.text = player1
+        player2Name.text = player2
 
-            player1Name.text = player1
-            player2Name.text = player2
-
-            val existingResult = ronda.resultados[Pair(player1, player2)]
-            if (existingResult != null) {
-                player1Score.setText(existingResult.player1Score.toString())
-                player2Score.setText(existingResult.player2Score.toString())
-            }
-
-            if (tournament.includeSetResults) {
-                for (setIndex in 0 until tournament.bestOf) {
-                    val setView = inflater.inflate(R.layout.item_set_input, setsContainer, false)
-                    val setTitle = setView.findViewById<TextView>(R.id.setTitle)
-                    val setPlayer1 = setView.findViewById<EditText>(R.id.setPlayer1Points)
-                    val setPlayer2 = setView.findViewById<EditText>(R.id.setPlayer2Points)
-
-                    setTitle.text = "Set ${setIndex + 1}"
-
-                    val setNumber = setIndex + 1
-                    if (existingResult != null && existingResult.sets.containsKey(setNumber)) {
-                        val existingSet = existingResult.sets[setNumber]
-                        setPlayer1.setText(existingSet?.player1Points.toString())
-                        setPlayer2.setText(existingSet?.player2Points.toString())
-                    }
-
-                    setsContainer.addView(setView)
-                }
-            }
-
-            matchesContainer.addView(matchInputView)
+        val existingResult = ronda.resultados[Pair(player1, player2)]
+        if (existingResult != null) {
+            player1Score.setText(existingResult.player1Score.toString())
+            player2Score.setText(existingResult.player2Score.toString())
         }
 
+        if (tournament.includeSetResults) {
+            for (setIndex in 0 until tournament.bestOf) {
+                val setView = inflater.inflate(R.layout.item_set_input, setsContainer, false)
+                val setTitle = setView.findViewById<TextView>(R.id.setTitle)
+                val setPlayer1 = setView.findViewById<EditText>(R.id.setPlayer1Points)
+                val setPlayer2 = setView.findViewById<EditText>(R.id.setPlayer2Points)
+
+                setTitle.text = "Set ${setIndex + 1}"
+
+                val setNumber = setIndex + 1
+                if (existingResult != null && existingResult.sets.containsKey(setNumber)) {
+                    val existingSet = existingResult.sets[setNumber]
+                    setPlayer1.setText(existingSet?.player1Points.toString())
+                    setPlayer2.setText(existingSet?.player2Points.toString())
+                }
+
+                setsContainer.addView(setView)
+            }
+        }
+
+        matchesContainer.addView(matchInputView)
+
         AlertDialog.Builder(this)
-            .setTitle("Introducir resultados - Ronda ${ronda.numero}")
+            .setTitle("Introducir resultados - Partido $player1 - $player2")
             .setView(dialogView)
             .setPositiveButton("Guardar") { _, _ ->
                 saveResults(tournament, ronda, dialogView)
@@ -282,6 +273,13 @@ class RoundsActivity : AppCompatActivity() {
                     val setP2 = setView.findViewById<EditText>(R.id.setPlayer2Points).text.toString().toIntOrNull() ?: 0
                     setResults[j + 1] = SetResult(setP1, setP2)
                 }
+            }
+
+            val result = MatchResult(player1Score, player2Score, setResults)
+            // Save the result using the original match pair
+            if (!tournament.checkMatchResult(result)) {
+                Toast.makeText(this, "Hay un resultado inválido según las reglas del torneo. Los no aceptados no serán registrados.", Toast.LENGTH_SHORT).show()
+                continue
             }
 
             // Prefer the pair built from the dialog names to ensure correct mapping

@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
         submitButton.setOnClickListener {
             val numJugadores = input.text.toString().trim().toIntOrNull()
             val numSets = sets.text.toString().trim().toIntOrNull()
+            val includeSets = includeSetsResults.isChecked
             if (numJugadores == null || numJugadores < 2) {
                 resultText.text = "El número de jugadores debe ser al menos 2."
                 return@setOnClickListener
@@ -42,6 +43,7 @@ class MainActivity : AppCompatActivity() {
             intent.putExtra("numJugadores", numJugadores)
             intent.putExtra("numSets", numSets)
             intent.putExtra("includeSetsResults", includeSetsResults.isChecked)
+            intent.putExtra("includeSetsResults", includeSets)
             startActivity(intent)
         }
     }

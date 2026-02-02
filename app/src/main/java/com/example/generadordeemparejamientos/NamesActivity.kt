@@ -21,6 +21,7 @@ class NamesActivity : AppCompatActivity() {
 
         val numJugadores = intent.getIntExtra("numJugadores", 0)
         val numSets = intent.getIntExtra("numSets", 1)
+        val includeSetsResults = intent.getBooleanExtra("includeSetsResults", false)
 
         // Create name input fields
         repeat(numJugadores) { index ->
@@ -67,7 +68,7 @@ class NamesActivity : AppCompatActivity() {
             intent.putExtra("numJugadores", numJugadores)
             intent.putExtra("nombres", nombres.toTypedArray())
             intent.putExtra("numSets", numSets)
-            intent.putExtra("includeSetsResults", intent.getBooleanExtra("includeSetsResults", false))
+            intent.putExtra("includeSetsResults", includeSetsResults)
             startActivity(intent)
         }
     }

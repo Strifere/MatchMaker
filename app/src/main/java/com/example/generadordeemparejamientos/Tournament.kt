@@ -1,6 +1,8 @@
 package com.example.generadordeemparejamientos
 
 import java.io.Serializable
+import kotlin.math.abs
+import kotlin.math.min
 
 class Tournament (
     var rondas: MutableList<Ronda> = mutableListOf(),
@@ -52,5 +54,58 @@ class Tournament (
     fun shouldDisplayResult(result: MatchResult): Boolean {
         // Don't display if both scores are 0
         return result.player1Score != 0 || result.player2Score != 0
+    }
+
+    // Checks that the match has not finished and, if it has, then that the results are correct
+    fun checkMatchResult(result : MatchResult) : Boolean {
+        var setsPlayed = 0
+        var player1SetsWon = 0
+        var player2SetsWon = 0
+        for (i in 0 until result.sets.size) {
+            val set = result.sets[i] ?: continue
+            if (checkSetResult(set)) {
+                setsPlayed++
+                when (whoWonSet(set)) {
+                    1 -> player1SetsWon++
+                    2 -> player2SetsWon++
+                }
+                continue
+            } else {
+                return false
+            }
+        }
+        // Check if the number of sets won matches the reported score
+        if (player1SetsWon != result.player1Score || player2SetsWon != result.player2Score) {
+            return false
+        }
+        return (result.player1Score <= (bestOf / 2) + 1) && (result.player2Score <= (bestOf / 2) + 1)
+
+    }
+
+    // Checks that the set has not finished and, if it has, then that the results are correct
+    fun checkSetResult(set: SetResult): Boolean {
+        val player1Points = set.player1Points
+        val player2Points = set.player2Points
+        return if (min(player1Points, player2Points) >= 10) {
+            (abs(player1Points - player2Points) <= 2)
+        } else {
+            (maxOf(player1Points, player2Points) <= 11)
+        }
+    }
+
+    fun whoWonSet(result: SetResult): Int {
+        return if (isSetFinished(result)) {
+            if (result.player1Points > result.player2Points) 1 else 2
+        } else 0
+    }
+
+    fun isSetFinished(result: SetResult): Boolean {
+        val player1Points = result.player1Points
+        val player2Points = result.player2Points
+        return if (min(player1Points, player2Points) >= 10) {
+            abs(player1Points - player2Points) == 2
+        } else {
+            maxOf(player1Points, player2Points) == 11
+        }
     }
 }

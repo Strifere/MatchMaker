@@ -252,7 +252,11 @@ class TableActivity : AppCompatActivity() {
             }
         }
 
+        val result = MatchResult(player1Score, player2Score, setResults)
         // Save the result using the original match pair
-        ronda.resultados[matchPair] = MatchResult(player1Score, player2Score, setResults)
+        if (tournament.checkMatchResult(result)) ronda.resultados[matchPair] = result
+        else {
+            android.widget.Toast.makeText(this, "Resultado inválido según las reglas del torneo.", android.widget.Toast.LENGTH_SHORT).show()
+        }
     }
 }

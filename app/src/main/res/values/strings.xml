@@ -21,4 +21,5 @@
     <string name="includeSetsResultsText">Incluir resultados de sets</string>
     <string name="see_classification_text">Ver clasificación</string>
     <string name="back">Atrás</string>
+    <string name="addSetButtonDescription">Lets the user add the result of the match</string>
 </resources>
