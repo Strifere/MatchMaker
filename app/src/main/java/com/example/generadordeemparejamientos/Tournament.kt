@@ -1,8 +1,6 @@
 package com.example.generadordeemparejamientos
 
 import java.io.Serializable
-import kotlin.math.abs
-import kotlin.math.min
 
 class Tournament (
     var rondas: MutableList<Ronda> = mutableListOf(),
@@ -38,74 +36,35 @@ class Tournament (
             rondas.add(Ronda(ronda + 1, emparejamientos, libre))
         }
     }
-    fun isMatchFinished(result: MatchResult): Boolean {
-        // If both scores are 0, match hasn't started
-        if (result.player1Score == 0 && result.player2Score == 0) {
-            return false
-        }
 
-        // Calculate sets needed to win (more than half)
-        val setsToWin = (bestOf / 2) + 1
-
-        // Check if either player has won enough sets
-        return result.player1Score >= setsToWin || result.player2Score >= setsToWin
-    }
-
-    fun shouldDisplayResult(result: MatchResult): Boolean {
-        // Don't display if both scores are 0
-        return result.player1Score != 0 || result.player2Score != 0
-    }
-
-    // Checks that the match has not finished and, if it has, then that the results are correct
-    fun checkMatchResult(result : MatchResult) : Boolean {
-        var setsPlayed = 0
-        var player1SetsWon = 0
-        var player2SetsWon = 0
-        for (i in 0 until result.sets.size) {
-            val set = result.sets[i] ?: continue
-            if (checkSetResult(set)) {
-                setsPlayed++
-                when (whoWonSet(set)) {
-                    1 -> player1SetsWon++
-                    2 -> player2SetsWon++
+    fun generateMatchResult(player1Score : Int?, player2Score : Int?, setResult: LinkedHashMap<Int, SetResult>): MatchResult {
+        // If the includeSetResults flag is true, it computes the overall result and checks that is correct
+        if (includeSetResults) {
+            var player1Sets = 0
+            var player2Sets = 0
+            for (i in 0 until setResult.size) {
+                val set = setResult[i] ?: continue
+                when (set.whoWonSet()) {
+                    1 -> player1Sets++
+                    2 -> player2Sets++
+                    0 -> { /* Set not finished, do nothing */}
                 }
-                continue
-            } else {
-                return false
             }
+            return MatchResult(
+                player1Score = player1Sets,
+                player2Score = player2Sets,
+                includeSetResults = true,
+                sets = setResult
+            )
         }
-        // Check if the number of sets won matches the reported score
-        if (player1SetsWon != result.player1Score || player2SetsWon != result.player2Score) {
-            return false
-        }
-        return (result.player1Score <= (bestOf / 2) + 1) && (result.player2Score <= (bestOf / 2) + 1)
-
-    }
-
-    // Checks that the set has not finished and, if it has, then that the results are correct
-    fun checkSetResult(set: SetResult): Boolean {
-        val player1Points = set.player1Points
-        val player2Points = set.player2Points
-        return if (min(player1Points, player2Points) >= 10) {
-            (abs(player1Points - player2Points) <= 2)
-        } else {
-            (maxOf(player1Points, player2Points) <= 11)
-        }
-    }
-
-    fun whoWonSet(result: SetResult): Int {
-        return if (isSetFinished(result)) {
-            if (result.player1Points > result.player2Points) 1 else 2
-        } else 0
-    }
-
-    fun isSetFinished(result: SetResult): Boolean {
-        val player1Points = result.player1Points
-        val player2Points = result.player2Points
-        return if (min(player1Points, player2Points) >= 10) {
-            abs(player1Points - player2Points) == 2
-        } else {
-            maxOf(player1Points, player2Points) == 11
+        // If the includeSetResults flag is false, it just creates the MatchResult object
+        else {
+            return MatchResult(
+                player1Score = player1Score ?: 0,
+                player2Score = player2Score ?: 0,
+                includeSetResults = false,
+                sets = setResult
+            )
         }
     }
 }
