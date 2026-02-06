@@ -14,8 +14,11 @@ import kotlinx.coroutines.launch
 class RoundsActivity : AppCompatActivity() {
     private lateinit var roundsContainer: LinearLayout
     private lateinit var tournament: Tournament
+    private lateinit var searchPlayerButton : Button
+    private lateinit var searchRoundButton : Button
     private var totalRounds: Int = 0
     private var busquedaRonda = false
+    private var currentRoundIndex = -1
     private var busquedaParticipante = false
     private var currentPlayerIndex = -1
 
@@ -26,8 +29,8 @@ class RoundsActivity : AppCompatActivity() {
         val backButton = findViewById<ImageButton>(R.id.backButton)
         val tableButton = findViewById<Button>(R.id.tableButton)
         roundsContainer = findViewById(R.id.roundsContainer)
-        val searchPlayerButton = findViewById<Button>(R.id.searchPlayerMatchesButton)
-        val searchRoundButton = findViewById<Button>(R.id.searchRoundButton)
+        searchPlayerButton = findViewById(R.id.searchPlayerMatchesButton)
+        searchRoundButton = findViewById(R.id.searchRoundButton)
 
         tournament = TournamentApplication.getTournament() as Tournament
 
@@ -53,6 +56,7 @@ class RoundsActivity : AppCompatActivity() {
             else {
                 renderAllRounds(tournament.rondas)
                 busquedaRonda = false
+                currentRoundIndex = -1
                 searchPlayerButton.visibility = View.VISIBLE
                 searchRoundButton.text = "Buscar ronda"
             }
@@ -60,6 +64,23 @@ class RoundsActivity : AppCompatActivity() {
 
         totalRounds = tournament.rondas.size
         renderAllRounds(tournament.rondas)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        refreshRounds()
+    }
+    private fun refreshRounds() {
+        // Refresh the rounds data from the tournament singleton in case it was updated in TableActivity
+        tournament = TournamentApplication.getTournament() as Tournament
+        totalRounds = tournament.rondas.size
+        if (busquedaParticipante && currentPlayerIndex != -1) {
+            renderContestantRounds(currentPlayerIndex)
+        } else if (busquedaRonda && currentRoundIndex != -1) {
+            renderSingleRound(currentRoundIndex)
+        } else {
+            renderAllRounds(tournament.rondas)
+        }
     }
 
     private fun showRoundSearchDialog(searchRoundButton: Button, searchPlayerButton: Button) {
@@ -79,12 +100,13 @@ class RoundsActivity : AppCompatActivity() {
             .setView(input)
             .setPositiveButton("Buscar") { _, _ ->
                 val text = input.text?.toString()?.trim()
-                val round = text?.toIntOrNull()
-                if (round == null || round < 1 || round > totalRounds) {
+                val round = (text?.toIntOrNull())?.minus(1) // Convert to 0-based index
+                if (round == null || round < 0 || round >= totalRounds) {
                     Toast.makeText(this, "Ronda Inválida. Tiene que ser entre 1..$totalRounds.", Toast.LENGTH_SHORT).show()
                 } else {
                     renderSingleRound(round)
                     busquedaRonda = true
+                    currentRoundIndex = round
                     searchPlayerButton.visibility = View.GONE
                     searchRoundButton.text = "Cancelar Búsqueda"
                 }
@@ -116,6 +138,7 @@ class RoundsActivity : AppCompatActivity() {
                         renderContestantRounds(playerIndex)
                         busquedaParticipante = true
                         busquedaRonda = false
+                        currentRoundIndex = -1
                         searchRoundButton.visibility = View.GONE
                         searchPlayerButton.text = "Cancelar Búsqueda"
                     }
@@ -147,7 +170,7 @@ class RoundsActivity : AppCompatActivity() {
 
     private fun renderSingleRound(roundNumber: Int) {
         roundsContainer.removeAllViews()
-        val ronda = tournament.rondas[roundNumber - 1]
+        val ronda = tournament.rondas[roundNumber]
         roundsContainer.addView(buildRoundCard(ronda, true, null))
     }
 
@@ -189,9 +212,7 @@ class RoundsActivity : AppCompatActivity() {
                 val context = this
                 lifecycleScope.launch {
                     if (showMatchInputDialog(tournament, ronda, player1, player2, context)) {
-                        if (busquedaParticipante) renderContestantRounds(currentPlayerIndex)
-                        else if (busquedaRonda) renderSingleRound(ronda.numero)
-                        else renderAllRounds(tournament.rondas)
+                        refreshRounds()
                     }
                 }
             }

@@ -1,14 +1,12 @@
 package com.example.generadordeemparejamientos
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.widget.EditText
 import android.widget.ImageButton
-import android.widget.LinearLayout
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
 import android.graphics.Color
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.toColorInt
@@ -16,26 +14,37 @@ import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
 
 class TableActivity : AppCompatActivity() {
+    private lateinit var nombres : Array<String>
+    private var numJugadores = -1
+    private lateinit var tableLayout: TableLayout
+    private lateinit var tournament: Tournament
+    private lateinit var rondas: List<Ronda>
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_table)
 
         val backButton = findViewById<ImageButton>(R.id.backButton)
-        val tableLayout = findViewById<TableLayout>(R.id.tableLayout)
+        val classificationButton = findViewById<Button>(R.id.classificationButton)
+        tableLayout = findViewById<TableLayout>(R.id.tableLayout)
 
-        val tournament = TournamentApplication.getTournament() as Tournament
-        val numJugadores = tournament.numJugadores
-        val nombres = tournament.nombres
+        tournament = TournamentApplication.getTournament() as Tournament
+        numJugadores = tournament.numJugadores
+        nombres = tournament.nombres
+        rondas = tournament.rondas
         @Suppress("UNCHECKED_CAST")
-        val rondas = tournament.rondas
 
         backButton.setOnClickListener {
             finish()
         }
+        classificationButton.setOnClickListener {
+            val classificationIntent = android.content.Intent(this, ClassificationActivity::class.java)
+            startActivity(classificationIntent)
+        }
 
         // Detect dark mode
-        val isDarkMode = isDarkModeEnabled()
+        val isDarkMode = isDarkModeEnabled(this)
 
         // Get theme-aware colors
         val headerBackgroundColor = ContextCompat.getColor(this, android.R.color.darker_gray)
@@ -136,11 +145,6 @@ class TableActivity : AppCompatActivity() {
         }
     }
 
-    private fun isDarkModeEnabled(): Boolean {
-        val nightModeFlags = this.resources.configuration.uiMode and android.content.res.Configuration.UI_MODE_NIGHT_MASK
-        return nightModeFlags == android.content.res.Configuration.UI_MODE_NIGHT_YES
-    }
-
     private fun findMatchResult(rondas: List<Ronda>, player1Name: String, player2Name: String): MatchResult? {
         for (ronda in rondas) {
             val result = ronda.resultados[Pair(player1Name, player2Name)]
@@ -152,13 +156,11 @@ class TableActivity : AppCompatActivity() {
     }
 
     private fun showMatchResultDialog(player1Name: String, player2Name: String) {
-        // Get tournament from singleton
-        val tournament = TournamentApplication.getTournament() as Tournament
-        @Suppress("UNCHECKED_CAST")
-        val rondas = tournament.rondas
+        val rondas = rondas
 
         var targetRonda: Ronda? = null
-        var matchPair: Pair<String, String>? = null
+        var player1TrueName: String? = null
+        var player2TrueName: String? = null
 
         // Search for the match in the rounds
         for (ronda in rondas) {
@@ -166,21 +168,22 @@ class TableActivity : AppCompatActivity() {
                 if ((pareja.first == player1Name && pareja.second == player2Name) ||
                     (pareja.first == player2Name && pareja.second == player1Name)) {
                     targetRonda = ronda
-                    matchPair = pareja
+                    player1TrueName = pareja.first
+                    player2TrueName = pareja.second
                     break
                 }
             }
             if (targetRonda != null) break
         }
 
-        if (targetRonda == null || matchPair == null) {
+        if (targetRonda == null) {
             android.widget.Toast.makeText(this, "Este emparejamiento no existe en el torneo", android.widget.Toast.LENGTH_SHORT).show()
             return
         }
 
         val context = this
         lifecycleScope.launch {
-            if (showMatchInputDialog(tournament, targetRonda, player1Name, player2Name, context)) {
+            if (showMatchInputDialog(tournament, targetRonda, player1TrueName!!, player2TrueName!!, context)) {
                 // Refresh the table
                 recreate()
             }

@@ -62,7 +62,7 @@
         android:layout_gravity="bottom">
 
         <Button
-            android:id="@+id/seeClassificationButton"
+            android:id="@+id/classificationButton"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="@string/see_classification_text"/>

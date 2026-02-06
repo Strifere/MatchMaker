@@ -112,3 +112,8 @@ private fun saveMatchResult(tournament: Tournament, ronda: Ronda, matchPair: Pai
     }
     return true
 }
+
+fun isDarkModeEnabled(context : Context): Boolean {
+    val nightModeFlags = context.resources.configuration.uiMode and android.content.res.Configuration.UI_MODE_NIGHT_MASK
+    return nightModeFlags == android.content.res.Configuration.UI_MODE_NIGHT_YES
+}

@@ -33,6 +33,8 @@
         <activity
             android:name=".TableActivity"
             android:exported="false" />
+        <activity android:name=".ClassificationActivity"
+            android:exported="false" />
     </application>
 
 </manifest>
