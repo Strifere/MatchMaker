@@ -1,4 +1,4 @@
-package com.example.generadordeemparejamientos
+package com.example.generadordeemparejamientos.presentation
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,6 +8,7 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.setPadding
+import com.example.generadordeemparejamientos.R
 
 class NamesActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

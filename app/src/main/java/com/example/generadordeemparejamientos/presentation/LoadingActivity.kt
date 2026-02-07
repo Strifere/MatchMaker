@@ -1,12 +1,15 @@
-package com.example.generadordeemparejamientos
+package com.example.generadordeemparejamientos.presentation
 
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.generadordeemparejamientos.R
+import com.example.generadordeemparejamientos.domain.classes.Player
+import com.example.generadordeemparejamientos.domain.controllers.DomainController
+import com.example.generadordeemparejamientos.domain.classes.Tournament
 
 class LoadingActivity : AppCompatActivity() {
     private var startTime = 0L
@@ -23,10 +26,8 @@ class LoadingActivity : AppCompatActivity() {
         val includeSetsResults = intent.getBooleanExtra("includeSetsResults", false)
 
         val timerText = findViewById<TextView>(R.id.timerText)
-        val linearProgressBar = findViewById<ProgressBar>(R.id.linearProgressBar)
 
         totalRounds = if (numJugadores % 2 == 1) numJugadores else numJugadores - 1
-        linearProgressBar.max = totalRounds
 
         startTime = System.currentTimeMillis()
 
@@ -37,15 +38,15 @@ class LoadingActivity : AppCompatActivity() {
             // Update UI on main thread when done
             runOnUiThread {
                 val intent = Intent(this, RoundsActivity::class.java)
+                val players = createPlayersList(numJugadores, nombres)
                 val tournament = Tournament(
-                    numJugadores = numJugadores,
-                    nombres = nombres,
-                    tabla = tabla.map { it.toIntArray() }.toTypedArray(),
+                    players = players,
                     bestOf = numSets,
                     includeSetResults = includeSetsResults
                 )
+                tournament.initialize(tabla)
                 // Store the tournament in the singleton
-                TournamentApplication.setTournament(tournament)
+                DomainController.setTournament(tournament)
                 startActivity(intent)
                 finish()
             }
@@ -62,49 +63,39 @@ class LoadingActivity : AppCompatActivity() {
         })
     }
 
-    private fun updateProgress(operation: String) {
-        runOnUiThread {
-            findViewById<TextView>(R.id.currentOperationText).text = operation
-            findViewById<ProgressBar>(R.id.linearProgressBar).progress = currentRound
-        }
-    }
-
-    private fun shiftNumbers(cruces: MutableList<Int>, N: Int) {
-        var aux = cruces[N-1]
-        for (i in 1 until N) {
+    private fun shiftNumbers(cruces: MutableList<Int>, n: Int) {
+        var aux = cruces[n-1]
+        for (i in 1 until n) {
             val temp = cruces[i]
             cruces[i] = aux
             aux = temp
         }
     }
 
-    fun generarTablaEmparejamientos(numJugadores: Int): List<List<Int>> {
+    private fun generarTablaEmparejamientos(numJugadores: Int): List<List<Int>> {
         val impar = numJugadores % 2 == 1
-        val N = if (impar) numJugadores + 1 else numJugadores
-        val nRondas = N - 1
-        val maxEmparejamientosPorRonda = N / 2
+        val n = if (impar) numJugadores + 1 else numJugadores
+        val nRondas = n - 1
+        val maxEmparejamientosPorRonda = n / 2
         var ronda = 0
-        updateProgress("Generando tabla de emparejamientos...")
-        val tablaTemporal = MutableList(N) { fila ->
-            MutableList(N) { columna -> if (fila >= columna) -2 else -1 }
+        val tablaTemporal = MutableList(n) { fila ->
+            MutableList(n) { columna -> if (fila >= columna) -2 else -1 }
         }
-        val cruces = (0 until N).toMutableList()
-        updateProgress("Calculando emparejamientos...")
+        val cruces = (0 until n).toMutableList()
         while (ronda < nRondas) {
             var contador = 0
             while (contador < maxEmparejamientosPorRonda) {
                 val jugador1 = cruces[contador]
-                val jugador2 = cruces[N - 1 - contador]
+                val jugador2 = cruces[n - 1 - contador]
                 if (jugador1 < jugador2) tablaTemporal[jugador1][jugador2] = ronda
                 else if (jugador1 > jugador2) tablaTemporal[jugador2][jugador1] = ronda
                 contador++
             }
-            shiftNumbers(cruces, N);
+            shiftNumbers(cruces, n);
             ++ronda
         }
 
         if (impar) {
-            updateProgress("Recalculando tabla sin 'bye'...")
             // Remove the "bye" player from the table
             val tablaSinBye = MutableList(numJugadores) {
                 MutableList(numJugadores) { -2 }
@@ -114,10 +105,19 @@ class LoadingActivity : AppCompatActivity() {
                     tablaSinBye[i][j] = tablaTemporal[i][j]
                 }
             }
-            updateProgress("Generando visualización...")
             return tablaSinBye
         }
         else return tablaTemporal
+    }
+
+    private fun createPlayersList(numJugadores: Int, nombres: Array<String>): Array<Player> {
+        val players = Array(numJugadores) { Player(name = "") }
+        for (i in 0 until numJugadores) {
+            val name = nombres[i]
+            val player = Player(name = name)
+            players[i] = player
+        }
+        return players
     }
 }
 

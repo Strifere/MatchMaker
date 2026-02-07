@@ -11,7 +11,7 @@
     android:padding="16dp"
     android:paddingTop="16dp"
     android:paddingBottom="16dp"
-    tools:context=".NamesActivity">
+    tools:context=".presentation.NamesActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

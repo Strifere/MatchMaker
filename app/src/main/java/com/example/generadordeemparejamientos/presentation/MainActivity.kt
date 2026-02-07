@@ -1,14 +1,12 @@
-package com.example.generadordeemparejamientos
+package com.example.generadordeemparejamientos.presentation
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.CheckBox
-import android.widget.EditText
 import android.widget.TextView
-import androidx.activity.enableEdgeToEdge
-import androidx.annotation.CheckResult
 import androidx.appcompat.app.AppCompatActivity
+import com.example.generadordeemparejamientos.R
 import com.google.android.material.textfield.TextInputEditText
 
 class MainActivity : AppCompatActivity() {

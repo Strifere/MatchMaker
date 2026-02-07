@@ -1,16 +1,28 @@
-package com.example.generadordeemparejamientos
+package com.example.generadordeemparejamientos.presentation
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
 import android.graphics.Color
+import android.util.TypedValue
+import android.view.View
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.toColorInt
 import androidx.lifecycle.lifecycleScope
+import com.example.generadordeemparejamientos.R
+import com.example.generadordeemparejamientos.domain.controllers.DomainController
+import com.example.generadordeemparejamientos.domain.classes.Match
+import com.example.generadordeemparejamientos.domain.classes.Player
+import com.example.generadordeemparejamientos.domain.classes.Round
+import com.example.generadordeemparejamientos.domain.classes.Tournament
+import com.example.generadordeemparejamientos.utils.isDarkModeEnabled
+import com.example.generadordeemparejamientos.utils.showMatchInputDialog
 import kotlinx.coroutines.launch
 
 class TableActivity : AppCompatActivity() {
@@ -18,7 +30,7 @@ class TableActivity : AppCompatActivity() {
     private var numJugadores = -1
     private lateinit var tableLayout: TableLayout
     private lateinit var tournament: Tournament
-    private lateinit var rondas: List<Ronda>
+    private lateinit var rounds: List<Round>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,17 +41,17 @@ class TableActivity : AppCompatActivity() {
         val classificationButton = findViewById<Button>(R.id.classificationButton)
         tableLayout = findViewById<TableLayout>(R.id.tableLayout)
 
-        tournament = TournamentApplication.getTournament() as Tournament
+        tournament = DomainController.Companion.getTournament() as Tournament
         numJugadores = tournament.numJugadores
         nombres = tournament.nombres
-        rondas = tournament.rondas
+        rounds = tournament.rounds
         @Suppress("UNCHECKED_CAST")
 
         backButton.setOnClickListener {
             finish()
         }
         classificationButton.setOnClickListener {
-            val classificationIntent = android.content.Intent(this, ClassificationActivity::class.java)
+            val classificationIntent = Intent(this, ClassificationActivity::class.java)
             startActivity(classificationIntent)
         }
 
@@ -74,10 +86,10 @@ class TableActivity : AppCompatActivity() {
             val headerCell = TextView(this)
             headerCell.text = nombre
             headerCell.setPadding(8, 8, 8, 8)
-            headerCell.textAlignment = android.view.View.TEXT_ALIGNMENT_CENTER
+            headerCell.textAlignment = View.TEXT_ALIGNMENT_CENTER
             headerCell.setBackgroundColor(headerBackgroundColor)
             headerCell.setTextColor(headerTextColor)
-            headerCell.setTextSize(android.util.TypedValue.COMPLEX_UNIT_SP, 12f)
+            headerCell.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
             headerRow.addView(headerCell)
         }
         tableLayout.addView(headerRow)
@@ -92,7 +104,7 @@ class TableActivity : AppCompatActivity() {
             rowHeader.setPadding(8, 8, 8, 8)
             rowHeader.setBackgroundColor(headerBackgroundColor)
             rowHeader.setTextColor(headerTextColor)
-            rowHeader.setTextSize(android.util.TypedValue.COMPLEX_UNIT_SP, 12f)
+            rowHeader.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
             row.addView(rowHeader)
 
             // Data cells
@@ -102,25 +114,25 @@ class TableActivity : AppCompatActivity() {
                 // Get match result if available
                 val player1Name = nombres[i]
                 val player2Name = nombres[j]
-                val matchResultSelf = findMatchResult(rondas, player1Name, player2Name)
-                val matchResultAgainst = findMatchResult(rondas, player2Name, player1Name)
+                val matchResultSelf = findMatchResult(rounds, player1Name, player2Name)
+                val matchResultAgainst = findMatchResult(rounds, player2Name, player1Name)
 
                 cell.text = when {
                     i == j -> "-"  // Diagonal cells
                     matchResultSelf != null && matchResultSelf.shouldDisplayResult()-> {
                         // Display result from perspective of player i (row player)
-                        "${matchResultSelf.player1Score}/${matchResultSelf.player2Score}"
+                        "${matchResultSelf.player1Sets}/${matchResultSelf.player2Sets}"
                     }
                     matchResultAgainst != null && matchResultAgainst.shouldDisplayResult() -> {
                         // Display result from perspective of player j (column player)
-                        "${matchResultAgainst.player2Score}/${matchResultAgainst.player1Score}"
+                        "${matchResultAgainst.player2Sets}/${matchResultAgainst.player1Sets}"
                     }
                     else -> ""  // No match yet
                 }
 
                 cell.setPadding(8, 8, 8, 8)
-                cell.textAlignment = android.view.View.TEXT_ALIGNMENT_CENTER
-                cell.setTextSize(android.util.TypedValue.COMPLEX_UNIT_SP, 11f)
+                cell.textAlignment = View.TEXT_ALIGNMENT_CENTER
+                cell.setTextSize(TypedValue.COMPLEX_UNIT_SP, 11f)
 
                 // Apply colors based on cell type
                 if (i == j) {
@@ -145,47 +157,52 @@ class TableActivity : AppCompatActivity() {
         }
     }
 
-    private fun findMatchResult(rondas: List<Ronda>, player1Name: String, player2Name: String): MatchResult? {
-        for (ronda in rondas) {
-            val result = ronda.resultados[Pair(player1Name, player2Name)]
-            if (result != null) {
-                return result
+    private fun findMatchResult(rounds: List<Round>, player1Name: String, player2Name: String): Match? {
+        for (ronda in rounds) {
+            val match = ronda.getMatchByNames(player1Name, player2Name)
+            if (match != null) {
+                return match
             }
         }
         return null
     }
 
     private fun showMatchResultDialog(player1Name: String, player2Name: String) {
-        val rondas = rondas
-
-        var targetRonda: Ronda? = null
-        var player1TrueName: String? = null
-        var player2TrueName: String? = null
+        var targetRound: Round? = null
+        var truePlayer1: Player? = null
+        var truePlayer2: Player? = null
 
         // Search for the match in the rounds
-        for (ronda in rondas) {
-            for (pareja in ronda.emparejamientos) {
-                if ((pareja.first == player1Name && pareja.second == player2Name) ||
-                    (pareja.first == player2Name && pareja.second == player1Name)) {
-                    targetRonda = ronda
-                    player1TrueName = pareja.first
-                    player2TrueName = pareja.second
+        for (round in rounds) {
+            for (match in round.matches) {
+                if ((match.player1.name == player1Name && match.player2.name == player2Name) ||
+                    (match.player1.name == player2Name && match.player2.name == player1Name)) {
+                    targetRound = round
+                    truePlayer1 = match.player1
+                    truePlayer2 = match.player2
                     break
                 }
             }
-            if (targetRonda != null) break
+            if (targetRound != null) break
         }
 
-        if (targetRonda == null) {
-            android.widget.Toast.makeText(this, "Este emparejamiento no existe en el torneo", android.widget.Toast.LENGTH_SHORT).show()
+        if (targetRound == null) {
+            Toast.makeText(this, "Este emparejamiento no existe en el torneo", Toast.LENGTH_SHORT).show()
             return
-        }
-
-        val context = this
-        lifecycleScope.launch {
-            if (showMatchInputDialog(tournament, targetRonda, player1TrueName!!, player2TrueName!!, context)) {
-                // Refresh the table
-                recreate()
+        } else {
+            val context = this
+            lifecycleScope.launch {
+                if (showMatchInputDialog(
+                        tournament,
+                        targetRound,
+                        truePlayer1!!,
+                        truePlayer2!!,
+                        context
+                    )
+                ) {
+                    // Refresh the table
+                    recreate()
+                }
             }
         }
     }

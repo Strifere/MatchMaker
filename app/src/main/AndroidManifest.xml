@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application
-        android:name=".TournamentApplication"
+        android:name=".domain.controllers.DomainController"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -13,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GeneradorDeEmparejamientos">
         <activity
-            android:name=".MainActivity"
+            android:name=".presentation.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,18 +21,18 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".NamesActivity"
+            android:name=".presentation.NamesActivity"
             android:exported="false" />
         <activity
-            android:name=".LoadingActivity"
+            android:name=".presentation.LoadingActivity"
             android:exported="false" />
         <activity
-            android:name=".RoundsActivity"
+            android:name=".presentation.RoundsActivity"
             android:exported="false" />
         <activity
-            android:name=".TableActivity"
+            android:name=".presentation.TableActivity"
             android:exported="false" />
-        <activity android:name=".ClassificationActivity"
+        <activity android:name=".presentation.ClassificationActivity"
             android:exported="false" />
     </application>
 

@@ -8,7 +8,7 @@
     android:gravity="center"
     android:orientation="vertical"
     android:padding="30dp"
-    tools:context=".MainActivity">
+    tools:context=".presentation.MainActivity">
 
 
     <com.google.android.material.textfield.TextInputEditText

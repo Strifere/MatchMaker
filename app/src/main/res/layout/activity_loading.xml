@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:gravity="center"
     android:padding="32dp"
-    tools:context=".LoadingActivity">
+    tools:context=".presentation.LoadingActivity">
 
     <ProgressBar
         android:id="@+id/circularProgressBar"
@@ -32,20 +32,6 @@
         android:layout_marginTop="24dp"
         android:padding="16dp"
         android:background="@drawable/card_background">
-
-        <ProgressBar
-            android:id="@+id/linearProgressBar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            style="?android:attr/progressBarStyleHorizontal" />
-
-            <TextView
-                android:id="@+id/currentOperationText"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textAlignment="center"
-                android:text="@string/calculationPlaceholder"/>
 
         <LinearLayout
             android:layout_width="match_parent"
