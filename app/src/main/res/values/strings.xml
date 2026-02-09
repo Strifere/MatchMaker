@@ -8,7 +8,7 @@
     <string name="tiempo">Tiempo:</string>
     <string name="elapsedTimePlaceholder">0s</string>
     <string name="ronda">Ronda:</string>
-    <string name="generando_emparejamientos">Generando emparejamientos...</string>
+    <string name="generando_emparejamientos">Generando emparejamientos…</string>
     <string name="rondaCounterPlaceholder">0</string>
     <string name="buscar_ronda">Buscar ronda</string>
     <string name="buscar_participante">Buscar partidos participante</string>
@@ -23,4 +23,18 @@
     <string name="back">Atrás</string>
     <string name="addSetButtonDescription">Lets the user add the result of the match</string>
     <string name="clasificacion">Clasificación</string>
+    <string name="roundsText">Lista de rondas</string>
+    <string name="playersText">Lista de participantes</string>
+    <string name="tableText">Tabla de resultados</string>
+    <string name="classificationText">Clasificación</string>
+    <string name="roundsDescription">Icono de lista rondas</string>
+    <string name="players">Participantes</string>
+    <string name="samplePlayerText">PlayerNameHere</string>
+    <string name="separatorText">VS</string>
+    <string name="tournamentTitle">Torneo de Tennis de Mesa</string>
+    <string name="roundsListDescription">Ver lista de rondas</string>
+    <string name="playersIconDescription">Ver Lista de Participantes</string>
+    <string name="tableIconDescription">Ver Tabla de resultados</string>
+    <string name="classificationIconDescription">Ver Clasificación</string>
+    <string name="exitText">Salir del torneo</string>
 </resources>

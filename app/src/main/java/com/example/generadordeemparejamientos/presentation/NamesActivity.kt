@@ -6,9 +6,11 @@ import android.widget.ImageButton
 import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.setPadding
 import com.example.generadordeemparejamientos.R
+import com.example.generadordeemparejamientos.domain.controllers.DomainController
 
 class NamesActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,26 +55,27 @@ class NamesActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            // Navigate to RoundsActivity
-            val intent = Intent(this, LoadingActivity::class.java)
-            intent.putExtra("numJugadores", numJugadores)
-            intent.putExtra("nombres", nombres.toTypedArray())
-            intent.putExtra("numSets", intent.getIntExtra("numSets", 1))
-            startActivity(intent)
+            if(checkNames(nombres)) startTournament(numJugadores, nombres, numSets, includeSetsResults)
         }
 
         generateEmptyButton.setOnClickListener {
             val nombres = (1..namesContainer.childCount).map { i -> i.toString() }
-
-            // Navigate to RoundsActivity
-            val intent = Intent(this, LoadingActivity::class.java)
-            intent.putExtra("numJugadores", numJugadores)
-            intent.putExtra("nombres", nombres.toTypedArray())
-            intent.putExtra("numSets", numSets)
-            intent.putExtra("includeSetsResults", includeSetsResults)
-            startActivity(intent)
+            startTournament(numJugadores, nombres, numSets, includeSetsResults)
         }
     }
 
+    private fun checkNames(nombres: List<String>): Boolean {
+        val uniqueNames = nombres.toSet()
+        if (uniqueNames.size < nombres.size) {
+            Toast.makeText(this, "No pueden haber nombres repetidos.", Toast.LENGTH_SHORT).show()
+            return false
+        }
+        return true
+    }
 
+    private fun startTournament(numJugadores: Int, nombres: List<String>, numSets: Int, includeSetsResults: Boolean) {
+        DomainController.setTournament(DomainController.createTournament(numJugadores, nombres.toTypedArray(), numSets, includeSetsResults))
+        val intent = Intent(this, TournamentActivity::class.java)
+        startActivity(intent)
+    }
 }

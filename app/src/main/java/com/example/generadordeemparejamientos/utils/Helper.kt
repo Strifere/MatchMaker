@@ -102,7 +102,7 @@ suspend fun showMatchInputDialog(tournament : Tournament, round: Round, player1:
     matchesContainer.addView(matchInputView)
 
     return AlertDialog.Builder(context)
-        .setTitle("Introducir resultados - Partido $player1 - $player2")
+        .setTitle("Introducir resultados - Partido ${player1.name} - ${player2.name}")
         .setView(dialogView)
         .create().await(tournament, round, player1, player2, matchInputView, context)
 }

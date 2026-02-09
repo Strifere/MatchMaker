@@ -10,7 +10,7 @@ import java.io.Serializable
  */
 class Round(
     val numero: Int,
-    val libre: String?,
+    val libre: Player?,
     val matches: Array<Match> = arrayOf()
 ) : Serializable {
 

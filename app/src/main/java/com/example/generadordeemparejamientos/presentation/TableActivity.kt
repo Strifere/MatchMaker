@@ -1,6 +1,5 @@
 package com.example.generadordeemparejamientos.presentation
 
-import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.TableLayout
@@ -9,7 +8,6 @@ import android.widget.TextView
 import android.graphics.Color
 import android.util.TypedValue
 import android.view.View
-import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -38,10 +36,9 @@ class TableActivity : AppCompatActivity() {
         setContentView(R.layout.activity_table)
 
         val backButton = findViewById<ImageButton>(R.id.backButton)
-        val classificationButton = findViewById<Button>(R.id.classificationButton)
         tableLayout = findViewById<TableLayout>(R.id.tableLayout)
 
-        tournament = DomainController.Companion.getTournament() as Tournament
+        tournament = DomainController.getTournament() as Tournament
         numJugadores = tournament.numJugadores
         nombres = tournament.nombres
         rounds = tournament.rounds
@@ -49,10 +46,6 @@ class TableActivity : AppCompatActivity() {
 
         backButton.setOnClickListener {
             finish()
-        }
-        classificationButton.setOnClickListener {
-            val classificationIntent = Intent(this, ClassificationActivity::class.java)
-            startActivity(classificationIntent)
         }
 
         // Detect dark mode

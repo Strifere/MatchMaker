@@ -5,6 +5,8 @@ import kotlin.math.max
 
 /**
  * Class representing the result of a match between two players.
+ * @property player1 The Player object representing the first player in the match.
+ * @property player2 The Player object representing the second player in the match.
  * @property player1Sets The number of sets won by player 1.
  * @property player2Sets The number of sets won by player 2.
  * @property includeSetResults A boolean indicating whether the detailed set results are included in the match result.

@@ -1,7 +1,6 @@
 // kotlin
 package com.example.generadordeemparejamientos.presentation
 
-import android.content.Intent
 import android.graphics.Paint
 import android.os.Bundle
 import android.text.InputType
@@ -34,18 +33,14 @@ class RoundsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_rounds)
 
         val backButton = findViewById<ImageButton>(R.id.backButton)
-        val tableButton = findViewById<Button>(R.id.tableButton)
         roundsContainer = findViewById(R.id.roundsContainer)
         searchPlayerButton = findViewById(R.id.searchPlayerMatchesButton)
         searchRoundButton = findViewById(R.id.searchRoundButton)
 
         tournament = DomainController.getTournament() as Tournament
 
-        backButton.setOnClickListener { finish() }
-
-        tableButton.setOnClickListener {
-            val tableIntent = Intent(this, TableActivity::class.java)
-            startActivity(tableIntent)
+        backButton.setOnClickListener {
+            finish()
         }
 
         searchPlayerButton.setOnClickListener {
@@ -69,8 +64,24 @@ class RoundsActivity : AppCompatActivity() {
             }
         }
 
+        // Check if we came from PlayersActivity with a player name to search for
+        val playerName = intent.getStringExtra("playerName")
+        if (playerName != null) {
+            val playerIndex = tournament.nombres.indexOfFirst { it.equals(playerName, ignoreCase = true) }
+            if (playerIndex != -1) {
+                currentPlayerIndex = playerIndex
+                busquedaParticipante = true
+                busquedaRonda = false
+                currentRoundIndex = -1
+                searchRoundButton.visibility = View.GONE
+                searchPlayerButton.text = "Cancelar Búsqueda"
+            } else {
+                Toast.makeText(this, "Participante no encontrado.", Toast.LENGTH_SHORT).show()
+            }
+        }
+
         totalRounds = tournament.rounds.size
-        renderAllRounds(tournament.rounds)
+        refreshRounds()
     }
 
     override fun onResume() {
@@ -79,7 +90,7 @@ class RoundsActivity : AppCompatActivity() {
     }
     private fun refreshRounds() {
         // Refresh the rounds data from the tournament singleton in case it was updated in TableActivity
-        tournament = DomainController.Companion.getTournament() as Tournament
+        tournament = DomainController.getTournament() as Tournament
         totalRounds = tournament.rounds.size
         if (busquedaParticipante && currentPlayerIndex != -1) {
             renderContestantRounds(currentPlayerIndex)
@@ -169,7 +180,7 @@ class RoundsActivity : AppCompatActivity() {
             val filteredEmparejamientos = ronda.emparejamientos.filter {
                 it.first == playerName || it.second == playerName
             }
-            if (filteredEmparejamientos.isNotEmpty() || ronda.libre == playerName) {
+            if (filteredEmparejamientos.isNotEmpty() || ronda.libre?.name == playerName) {
                 roundsContainer.addView(buildRoundCard(ronda, false, playerName))
             }
         }
@@ -215,8 +226,8 @@ class RoundsActivity : AppCompatActivity() {
                 resultView.text = resultText.toString()
                 resultView.visibility = View.VISIBLE
             }
-            val addMatchResultButton = matchView.findViewById<ImageButton>(R.id.addMatchResultButton)
-            addMatchResultButton.setOnClickListener {
+            val matchCard = matchView.findViewById<FrameLayout>(R.id.matchCard)
+            matchCard.setOnClickListener {
                 val context = this
                 lifecycleScope.launch {
                     if (showMatchInputDialog(tournament, round, match.player1, match.player2, context)) {
@@ -229,7 +240,7 @@ class RoundsActivity : AppCompatActivity() {
 
         if (round.libre != null) {
             byeText.visibility = View.VISIBLE
-            byeText.text = "Descansa: ${round.libre}"
+            byeText.text = "Descansa: ${round.libre.name}"
         } else {
             byeText.visibility = View.GONE
         }

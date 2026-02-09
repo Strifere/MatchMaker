@@ -36,43 +36,27 @@
             android:textStyle="bold"
             android:layout_marginStart="16dp"
             android:textColor="?attr/colorOnBackground" />
-    </LinearLayout>
 
-    <HorizontalScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:scrollbarAlwaysDrawHorizontalTrack="true">
-
-        <LinearLayout
+        <Button
+            android:id="@+id/searchRoundButton"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="48dp"
+            android:text="@string/buscar_ronda"
+            android:textSize="14sp"
+            android:layout_gravity="end"/>
 
-            <Button
-                android:id="@+id/searchRoundButton"
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:text="@string/buscar_ronda"
-                android:textSize="14sp"
-                android:layout_gravity="start"/>
+        <View
+            android:layout_width="10dp"
+            android:layout_height="match_parent"/>
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:minWidth="8dp"/>
-
-            <Button
-                android:id="@+id/searchPlayerMatchesButton"
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:text="@string/buscar_participante"
-                android:textSize="14sp"
-                android:layout_gravity="end"/>
-        </LinearLayout>
-
-    </HorizontalScrollView>
+        <Button
+            android:id="@+id/searchPlayerMatchesButton"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:text="@string/buscar_participante"
+            android:textSize="14sp"
+            android:layout_gravity="end"/>
+    </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"

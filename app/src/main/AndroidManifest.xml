@@ -24,15 +24,19 @@
             android:name=".presentation.NamesActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.LoadingActivity"
-            android:exported="false" />
-        <activity
             android:name=".presentation.RoundsActivity"
             android:exported="false" />
         <activity
             android:name=".presentation.TableActivity"
             android:exported="false" />
-        <activity android:name=".presentation.ClassificationActivity"
+        <activity
+            android:name=".presentation.ClassificationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.TournamentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.PlayersActivity"
             android:exported="false" />
     </application>
 

@@ -2,8 +2,6 @@ package com.example.generadordeemparejamientos.domain.classes
 
 import java.io.Serializable
 import java.util.SortedMap
-import java.util.SortedSet
-import kotlin.collections.iterator
 
 /**
  * Class that represents the tournament.
@@ -27,7 +25,12 @@ class Tournament (
 
     val nombres: Array<String>
         get() = players.map { it.name }.toTypedArray()
-    fun initialize (tabla : List<List<Int>>) {
+
+    /**
+     * Function that creates the data elements necessary for the tournament management and initializes them.
+     * @param tabla A 2D list of integers representing the matchup table, where cell at row i and column j indicates the round number in which player i and player j will face each other.
+     */
+    fun initialize(tabla : List<List<Int>>) {
         val nRondas = if (numJugadores % 2 == 1) numJugadores else numJugadores - 1
         for (ronda in 0 until nRondas) {
             val usados = MutableList(numJugadores) { false }
@@ -58,7 +61,7 @@ class Tournament (
                     break
                 }
             }
-            val libre = if (libreIndex != -1) players[libreIndex].name else null
+            val libre = if (libreIndex != -1) players[libreIndex] else null
             rounds.add(Round(ronda + 1, libre, matches))
         }
     }
@@ -140,6 +143,9 @@ class Tournament (
         return table
     }
 
+    /**
+     * Updates the statistics of each player in the tournament.
+     */
     fun updatePlayerStats() {
         val stats : SortedMap<String, Player> = initializeStats()
         for (ronda in rounds) {
