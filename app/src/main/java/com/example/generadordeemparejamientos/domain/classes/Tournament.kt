@@ -15,6 +15,8 @@ import java.util.SortedMap
  * @constructor Initializes the tournament by generating the rounds and matchups based on the provided player names and matchup table.
  */
 class Tournament (
+    val name: String,
+    val creator: String,
     var rounds: MutableList<Round> = mutableListOf(),
     val players: Array<Player>,
     val bestOf: Int,
@@ -67,19 +69,19 @@ class Tournament (
     }
 
     /**
-     * Generates a MatchResult object for a given match, based on the provided player scores and set results. If the includeSetResults flag is true, it computes the overall match result from the set results and checks that it is consistent with the provided scores. If the flag is false, it simply creates the MatchResult object with the provided scores.
+     * Generates a [Match] object for a given match, based on the provided player scores and set results. If the [includeSetResults] flag is true, it computes the overall match result from the set results and checks that it is consistent with the provided scores. If the flag is false, it simply creates the [Match] object with the provided scores.
       * @param player1Score Score of player 1 (number of sets won)
       * @param player2Score Score of player 2 (number of sets won)
-      * @param setResult Map of set index to SetResult, representing the results of individual sets in the match
-      * @return A MatchResult object representing the outcome of the match
+      * @param sets Map of set index to [Set], representing the individual sets in the match
+      * @return A [Match] object representing the match
      */
-    fun generateMatchResult(player1: Player, player2: Player, player1Score : Int?, player2Score : Int?, setResult: LinkedHashMap<Int, Set>): Match {
+    fun generateMatchResult(player1: Player, player2: Player, player1Score : Int?, player2Score : Int?, sets: LinkedHashMap<Int, Set>): Match {
         // If the includeSetResults flag is true, it computes the overall result and checks that is correct
         if (includeSetResults) {
             var player1Sets = 0
             var player2Sets = 0
-            for (i in 0 until setResult.size) {
-                val set = setResult[i] ?: continue
+            for (i in 0 until sets.size) {
+                val set = sets[i] ?: continue
                 when (set.whoWonSet()) {
                     1 -> player1Sets++
                     2 -> player2Sets++
@@ -92,7 +94,7 @@ class Tournament (
                 player1Sets = player1Sets,
                 player2Sets = player2Sets,
                 includeSetResults = true,
-                sets = setResult
+                sets = sets
             )
         }
         // If the includeSetResults flag is false, it just creates the MatchResult object
@@ -103,7 +105,7 @@ class Tournament (
                 player1Sets = player1Score ?: 0,
                 player2Sets = player2Score ?: 0,
                 includeSetResults = false,
-                sets = setResult
+                sets = sets
             )
         }
     }
@@ -193,8 +195,8 @@ class Tournament (
     }
 
     /**
-     * Initializes the statistics map for all players in the tournament. It creates a SortedMap where the keys are player names and the values are PlayerStats objects initialized with default values (0 matches played, won, lost, sets for, sets against, and points).
-      * @return A SortedMap mapping player names to their corresponding PlayerStats objects
+     * Initializes the statistics map for all players in the tournament. It creates a [SortedMap] where the keys are player names and the values are [Player] objects initialized with default values (0 matches played, won, lost, sets for, sets against, and points).
+      * @return A [SortedMap] mapping player names to their corresponding [Player] objects
      */
     private fun initializeStats(): SortedMap<String, Player> {
         val stats : SortedMap<String, Player> = sortedMapOf()
@@ -205,11 +207,8 @@ class Tournament (
     }
 
     /**
-     * Inserts a player's statistics into the classification set. The classification is sorted by
-     * points, then by set difference, then by sets for, and finally alphabetically. The player's
-     * entry is formatted as "points-pg-sf-pp-sc:playerName" to ensure correct sorting order in the
-     * SortedSet.
-      * @param classification The SortedMap representing the classification table, where player entries are stored as strings
+     * Inserts a player's statistics into the classification map. The classification is sorted by points, then by set difference, then by sets for, and finally alphabetically. The player's entry is formatted as "points-pg-sf-pp-[sf - sc]:playerName" to ensure correct sorting order in the [SortedMap].
+      * @param classification The [SortedMap] representing the classification table, where player entries are stored as strings
       * @param player The object containing the info of the player (name, matches played, won, lost, sets for, sets against, and points)
      */
     private fun insertIntoClassification(classification: SortedMap<String,Player>, player: Player) {

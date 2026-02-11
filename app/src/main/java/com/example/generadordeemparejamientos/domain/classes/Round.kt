@@ -15,14 +15,14 @@ class Round(
 ) : Serializable {
 
     /**
-     * A list of pairs of player names representing the matchups in this round. Each pair contains the names of the two players in a match. This property is derived from the matches array and provides a convenient way to access the matchups without needing to access the full Match objects.
+     * A list of pairs of player names representing the matchups in this round. Each pair contains the names of the two players in a match. This property is derived from the matches array and provides a convenient way to access the matchups without needing to access the full [Match] objects.
      */
     val emparejamientos: List<Pair<String, String>>
         get() = matches.map { Pair(it.player1.name, it.player2.name) }
 
     /**
-     * Retrieves the Match object for a given pair of player names.
-     * @return returns the corresponding Match object; otherwise, it returns null.
+     * Retrieves the [Match] object for a given pair of player names.
+     * @return returns the corresponding [Match] object; otherwise, it returns null.
      */
     fun getMatchByNames(player1Name: String, player2Name: String): Match? {
         return matches.find { (it.player1.name == player1Name && it.player2.name == player2Name) }

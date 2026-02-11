@@ -1,93 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    android:id="@+id/mainDrawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:padding="30dp"
-    tools:context=".presentation.MainActivity">
+    tools:context=".presentation.MainActivity"
+    android:padding="10dp">
 
-
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/inputBox"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/introduce_cantidad_de_jugadores"
-        android:inputType="number"/>
+        android:layout_height="match_parent">
+        <ImageButton
+            android:id="@+id/menuButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="8dp"
+            android:background="?attr/selectableItemBackground"
+            android:tint="?attr/colorOnBackground"
+            android:contentDescription="@string/navigation_drawer_open"
+            android:src="@drawable/menu_svgrepo_com"
+            android:scaleType="centerInside"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintTop_toTopOf="@id/guidelineTop" />
+        <ImageButton
+            android:id="@+id/profileButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="8dp"
+            android:background="?attr/selectableItemBackground"
+            android:tint="?attr/colorOnBackground"
+            android:contentDescription="@string/main_profile_button_description"
+            android:src="@drawable/user_menu"
+            android:scaleType="centerInside"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+            app:layout_constraintTop_toTopOf="@id/guidelineTop" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:orientation="horizontal"
-        android:layout_marginTop="10dp">
+
+
+        <ImageView
+            android:id="@+id/logoImage"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:contentDescription="@string/main_logo_description"
+            android:src="@mipmap/ic_launcher"
+            app:layout_constraintStart_toEndOf="@id/guidelineStart"
+            app:layout_constraintEnd_toStartOf="@id/guidelineEnd"
+            app:layout_constraintTop_toBottomOf="@id/guidelineTop"
+            app:layout_constraintBottom_toTopOf="@id/guidelineBottom"
+            app:layout_constraintVertical_bias="0.25"/>
+
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="@string/firstSetsText"
-            android:textSize="17sp"
-            android:textAlignment="center"
-            android:gravity="center"
-            android:layout_gravity="center"/>
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/setsBox"
-            android:layout_width="190dp"
-            android:layout_height="wrap_content"
-            android:hint="@string/setsHint"
-            android:inputType="number"
-            android:textAlignment="center"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="@string/secondSetsText"
-            android:textSize="17sp"
-            android:textAlignment="center"
-            android:gravity="center"
-            android:layout_gravity="center"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="8dp">
-
-        <CheckBox
-            android:id="@+id/includeSetsResults"
+            android:id="@+id/mainTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_gravity="start"/>
+            android:text="Generador de Torneos"
+            android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/logoImage" />
 
         <TextView
+            android:id="@+id/mainDescription"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:padding="16dp"
+            android:text="@string/main_description"
+            android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintTop_toBottomOf="@id/mainTitle" />
+
+        <ImageButton
+            android:id="@+id/secondaryActionButton"
+            android:padding="10dp"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/circular_button_background"
+            android:contentDescription="@string/main_secondary_button_description"
+            android:src="@drawable/load_list_svgrepo_com"
+            android:scaleType="centerInside"
+            android:tint="@color/white"
+            app:layout_constraintBottom_toBottomOf="@id/guidelineBottom"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"/>
+
+        <ImageButton
+            android:id="@+id/createTournamentButton"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/circular_button_background"
+            android:contentDescription="@string/main_create_tournament_description"
+            android:src="@drawable/baseline_add_24"
+            app:layout_constraintBottom_toBottomOf="@id/guidelineBottom"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+            android:tint="@color/white"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineTop"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="@string/includeSetsResultsText"
-            android:gravity="center"
-            android:textSize="17sp"/>
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.05"/>
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineBottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.965"/>
 
-    </LinearLayout>
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.035"/>
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineEnd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.965"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <Button
-        android:id="@+id/submitButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/siguiente"
-        android:layout_marginTop="10dp"/>
-
-    <TextView
-        android:id="@+id/testo"
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/mainNavView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="@string/texto_entrada"
-        android:textAlignment="center"
-        />
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:menu="@menu/main_drawer_menu" />
 
+</androidx.drawerlayout.widget.DrawerLayout>
 
-</LinearLayout>

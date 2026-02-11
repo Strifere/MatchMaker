@@ -2,7 +2,7 @@
     <string name="app_name">Generador de emparejamientos</string>
     <string name="introduce_cantidad_de_jugadores">Introduce cantidad de jugadores</string>
     <string name="siguiente">Siguiente</string>
-    <string name="texto_entrada">¡Bienvenido al generador de emparejamientos para una liga! \nIntroduzca el número de participantes arriba y haga click en \'Siguiente\'.</string>
+    <string name="texto_entrada">Introduce los parámetros necesarios para definir la competición.</string>
     <string name="calculating">Calculando los emparejamientos… \nEste proceso tardará más o menos dependiendo de la RAM y procesador que tenga tu smartphone.</string>
     <string name="calculationPlaceholder">Aquí se mostrará la operación en curso.</string>
     <string name="tiempo">Tiempo:</string>
@@ -37,4 +37,33 @@
     <string name="tableIconDescription">Ver Tabla de resultados</string>
     <string name="classificationIconDescription">Ver Clasificación</string>
     <string name="exitText">Salir del torneo</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_transform">Transform</string>
+    <string name="menu_reflow">Reflow</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_settings">Settings</string>
+
+    <string name="lorem_ipsum_title">Lorem Ipsum"</string>
+    <string name="lorem_ipsum">Lorem Ipsum is simply placeholder text of the printing and
+        typesetting industry. Lorem Ipsum has been the industry\'s standard placeholder text ever
+        since the 1500s, when an unknown printer took a galley of type and scrambled it to make a
+        type specimen book"
+    </string>
+    <string name="fab_content_description">Represents a view to invoke an action</string>
+    <string name="image_view_item_transform_content_description">Represents an image view in the
+        item
+    </string>
+    <string name="main_title">Torneo</string>
+    <string name="main_description">Crea un nuevo torneo o abre el menu para explorar opciones.</string>
+    <string name="main_logo_description">Logo principal</string>
+    <string name="main_profile_button_description">Abrir perfil</string>
+    <string name="main_secondary_button_description">Accion secundaria</string>
+    <string name="main_create_tournament_description">Crear torneo</string>
 </resources>

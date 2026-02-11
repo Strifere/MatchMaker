@@ -2,46 +2,35 @@ package com.example.generadordeemparejamientos.presentation
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
-import android.widget.CheckBox
-import android.widget.TextView
+import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import com.example.generadordeemparejamientos.R
-import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.navigation.NavigationView
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val input = findViewById<TextInputEditText>(R.id.inputBox)
-        val sets = findViewById<TextInputEditText>(R.id.setsBox)
-        val submitButton = findViewById<Button>(R.id.submitButton)
-        val resultText = findViewById<TextView>(R.id.testo)
-        val includeSetsResults = findViewById<CheckBox>(R.id.includeSetsResults)
+        val drawerLayout = findViewById<DrawerLayout>(R.id.mainDrawer)
+        val navView = findViewById<NavigationView>(R.id.mainNavView)
+        val menuButton = findViewById<ImageButton>(R.id.menuButton)
+        val createButton = findViewById<ImageButton>(R.id.createTournamentButton)
 
-        submitButton.setOnClickListener {
-            val numJugadores = input.text.toString().trim().toIntOrNull()
-            val numSets = sets.text.toString().trim().toIntOrNull()
-            val includeSets = includeSetsResults.isChecked
-            if (numJugadores == null || numJugadores < 2) {
-                resultText.text = "El número de jugadores debe ser al menos 2."
-                return@setOnClickListener
-            }
-            if (numSets == null) {
-                resultText.text = "Introduzca el número de sets máximo por partido."
-                return@setOnClickListener
-            } else if (numSets%2 == 0) {
-                resultText.text = "El número de sets debe ser impar."
-                return@setOnClickListener
-            }
+        menuButton.setOnClickListener {
+            drawerLayout.openDrawer(GravityCompat.START)
+        }
 
-            // Navigate to NamesActivity
-            val intent = Intent(this, NamesActivity::class.java)
-            intent.putExtra("numJugadores", numJugadores)
-            intent.putExtra("numSets", numSets)
-            intent.putExtra("includeSetsResults", includeSetsResults.isChecked)
-            intent.putExtra("includeSetsResults", includeSets)
+        navView.setNavigationItemSelectedListener { item ->
+            item.isChecked = true
+            drawerLayout.closeDrawer(GravityCompat.START)
+            true
+        }
+
+        createButton.setOnClickListener {
+            val intent = Intent(this, CreateTournamentActivity::class.java)
             startActivity(intent)
         }
     }

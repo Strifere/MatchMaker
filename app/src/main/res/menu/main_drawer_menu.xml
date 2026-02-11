@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_tournaments"
+        android:icon="@drawable/table_layout_svgrepo_com"
+        android:title="@string/tabla_de_emparejamientos" />
+    <item
+        android:id="@+id/nav_rounds"
+        android:icon="@drawable/list_ordered_svgrepo_com"
+        android:title="@string/rondas" />
+    <item
+        android:id="@+id/nav_classification"
+        android:icon="@drawable/podium_with_cup_svgrepo_com"
+        android:title="@string/clasificacion" />
+</menu>
+

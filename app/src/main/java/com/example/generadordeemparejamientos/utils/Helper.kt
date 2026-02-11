@@ -19,8 +19,8 @@ import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.resume
 
 /**
- * Extension function to await the result of an AlertDialog button click in a suspend function.
- * This allows us to use AlertDialogs in a more coroutine-friendly way, without blocking the main thread.
+ * Extension function to await the result of an [AlertDialog] button click in a suspend function.
+ * This allows us to use [AlertDialog]s in a more coroutine-friendly way, without blocking the main thread.
  */
 suspend fun AlertDialog.await(tournament : Tournament, round : Round, player1 : Player, player2 : Player, matchInputView : View, context: Context) = suspendCancellableCoroutine { cont ->
     val listener = DialogInterface.OnClickListener { _, which ->
@@ -54,7 +54,7 @@ suspend fun AlertDialog.await(tournament : Tournament, round : Round, player1 : 
  * @param round The current round, used to save the results in the correct place.
  * @param player1 The first player, used to display in the dialog and to save the results.
  * @param player2 The second player, used to display in the dialog and to save the results.
- * @param context The context in which to show the dialog, used to inflate the layout and to show Toast messages for validation errors.
+ * @param context The context in which to show the dialog, used to inflate the layout and to show [Toast] messages for validation errors.
  * @return true if the results were successfully saved, false if the user cancelled or if there was a validation error with the input.
  */
 suspend fun showMatchInputDialog(tournament : Tournament, round: Round, player1: Player, player2: Player, context: Context) : Boolean {
@@ -114,7 +114,7 @@ suspend fun showMatchInputDialog(tournament : Tournament, round: Round, player1:
  * @param player1 The first player, used to save the results in the correct match.
  * @param player2 The second player, used to save the results in the correct match.
  * @param matchView The view containing the input fields for the match result, used to extract the entered scores and set results.
- * @param context The context used to show Toast messages for validation errors.
+ * @param context The context used to show [Toast] messages for validation errors.
  * @return true if the result was successfully saved, false if there was a validation error with the input.
  */
 private fun saveMatchResult(tournament: Tournament, round: Round, player1: Player, player2: Player, matchView: View, context: Context) : Boolean {

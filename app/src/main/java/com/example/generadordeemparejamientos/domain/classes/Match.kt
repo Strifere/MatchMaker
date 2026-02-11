@@ -5,12 +5,12 @@ import kotlin.math.max
 
 /**
  * Class representing the result of a match between two players.
- * @property player1 The Player object representing the first player in the match.
- * @property player2 The Player object representing the second player in the match.
+ * @property player1 The [Player] object representing the first player in the match.
+ * @property player2 The [Player] object representing the second player in the match.
  * @property player1Sets The number of sets won by player 1.
  * @property player2Sets The number of sets won by player 2.
  * @property includeSetResults A boolean indicating whether the detailed set results are included in the match result.
- * @property sets A LinkedHashMap that stores the results of each set in the match, where the key is the set number (starting from 0) and the value is a SetResult object representing the result of that set.
+ * @property sets A [LinkedHashMap] that stores the results of each set in the match, where the key is the set number (starting from 0) and the value is a [Set] object representing the set.
  * The class provides methods to check if the match has finished based on the scores and the best-of format, to determine if the match result should be displayed, and to validate the match result against the included set results and the best-of format.
  */
 class Match (
@@ -24,7 +24,7 @@ class Match (
 
     /**
      * Checks if the match has finished.
-     * @param bestOf Maximum sets per match (the set is won if one of the players wins (bestOf / 2) + 1 sets).
+     * @param bestOf Maximum sets per match (the set is won if one of the players wins ([bestOf] / 2) + 1 sets).
      * @return true if the match has finished, false otherwise.
      */
     fun isMatchFinished(bestOf: Int): Boolean {
@@ -52,7 +52,7 @@ class Match (
 
     /**
      * Checks that the match has not finished and, if it has, then that the results are correct.
-     * @param bestOf Maximum sets per match (the set is won if one of the players wins (bestOf / 2) + 1 sets).
+     * @param bestOf Maximum sets per match (the set is won if one of the players wins ([bestOf] / 2) + 1 sets).
      * @return true if the match result is valid, false if:
      * - The match has finished but the number of sets won by each player does not match the included set results (if includeSetResults is true).
      * - The match has finished but the number of sets won by either player exceeds the maximum possible based on the best-of format.
