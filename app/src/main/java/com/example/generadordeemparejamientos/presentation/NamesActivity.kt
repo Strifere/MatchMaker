@@ -23,7 +23,6 @@ class NamesActivity : AppCompatActivity() {
         val namesContainer = findViewById<LinearLayout>(R.id.namesContainer)
 
         val tournamentName = intent.getStringExtra("tournamentName")!!
-        val tournamentCreator = intent.getStringExtra("tournamentCreator")!!
         val numJugadores = intent.getIntExtra("numJugadores", 0)
         val numSets = intent.getIntExtra("numSets", 1)
         val includeSetsResults = intent.getBooleanExtra("includeSetsResults", false)
@@ -57,12 +56,12 @@ class NamesActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            if(checkNames(nombres)) startTournament(tournamentName, tournamentCreator, numJugadores, nombres, numSets, includeSetsResults)
+            if(checkNames(nombres)) startTournament(tournamentName, numJugadores, nombres, numSets, includeSetsResults)
         }
 
         generateEmptyButton.setOnClickListener {
             val nombres = (1..namesContainer.childCount).map { i -> i.toString() }
-            startTournament(tournamentName, tournamentCreator, numJugadores, nombres, numSets, includeSetsResults)
+            startTournament(tournamentName, numJugadores, nombres, numSets, includeSetsResults)
         }
     }
 
@@ -75,8 +74,9 @@ class NamesActivity : AppCompatActivity() {
         return true
     }
 
-    private fun startTournament(tournamentName: String, tournamentCreator: String, numJugadores: Int, nombres: List<String>, numSets: Int, includeSetsResults: Boolean) {
-        DomainController.setTournament(DomainController.createTournament(tournamentName, tournamentCreator, numJugadores, nombres.toTypedArray(), numSets, includeSetsResults))
+    private fun startTournament(tournamentName: String, numJugadores: Int, nombres: List<String>, numSets: Int, includeSetsResults: Boolean) {
+        val domainController = DomainController.getInstance()
+        domainController.setTournament(domainController.createTournament(tournamentName,  numJugadores, nombres.toTypedArray(), numSets, includeSetsResults))
         val intent = Intent(this, TournamentActivity::class.java)
         startActivity(intent)
     }

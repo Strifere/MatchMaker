@@ -15,8 +15,7 @@ import java.util.SortedMap
  * @constructor Initializes the tournament by generating the rounds and matchups based on the provided player names and matchup table.
  */
 class Tournament (
-    val name: String,
-    val creator: String,
+    var name: String,
     var rounds: MutableList<Round> = mutableListOf(),
     val players: Array<Player>,
     val bestOf: Int,

@@ -14,15 +14,32 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginBottom="10dp">
+
         <TextView
-            android:layout_width="match_parent"
+            android:id="@+id/tournamentTitle"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:maxWidth="340dp"
             android:text="@string/tournamentTitle"
             android:textAlignment="center"
+            android:textColor="?attr/colorOnBackground"
             android:textSize="24sp"
-            android:textStyle="bold"
-            android:textColor="?attr/colorOnBackground"/>
+            android:textStyle="bold"/>
+
+        <ImageButton
+            android:id="@+id/editTitleButton"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:maxHeight="30dp"
+            android:background="?attr/selectableItemBackground"
+            android:contentDescription="@string/editTitleDescription"
+            android:scaleType="centerInside"
+            android:src="@drawable/edit_1483_svgrepo_com"
+            app:tint="?attr/colorOnBackground" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -159,13 +176,27 @@
         </LinearLayout>
     </LinearLayout>
 
-    <Button
-        android:id="@+id/exitButton"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/exitText"
-        android:layout_marginTop="16dp"
-        android:backgroundTint="@android:color/holo_red_dark"
-        android:textColor="@android:color/white"/>
+        android:orientation="vertical">
+        <Button
+            android:id="@+id/saveButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Guardar Torneo"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@android:color/holo_green_light"
+            android:textColor="@android:color/white"/>
+
+        <Button
+            android:id="@+id/exitButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/exitText"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@android:color/holo_red_dark"
+            android:textColor="@android:color/white"/>
+    </LinearLayout>
 
 </LinearLayout>

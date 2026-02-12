@@ -49,7 +49,7 @@ class PlayersActivity : AppCompatActivity() {
             }
         })
 
-        tournament = DomainController.getTournament() as Tournament
+        tournament = DomainController.getInstance().getTournament() as Tournament
 
         backButton.setOnClickListener {
             finish()

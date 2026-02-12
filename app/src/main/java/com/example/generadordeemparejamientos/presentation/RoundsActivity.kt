@@ -37,7 +37,7 @@ class RoundsActivity : AppCompatActivity() {
         searchPlayerButton = findViewById(R.id.searchPlayerMatchesButton)
         searchRoundButton = findViewById(R.id.searchRoundButton)
 
-        tournament = DomainController.getTournament() as Tournament
+        tournament = DomainController.getInstance().getTournament() as Tournament
 
         backButton.setOnClickListener {
             finish()
@@ -90,7 +90,7 @@ class RoundsActivity : AppCompatActivity() {
     }
     private fun refreshRounds() {
         // Refresh the rounds data from the tournament singleton in case it was updated in TableActivity
-        tournament = DomainController.getTournament() as Tournament
+        tournament = DomainController.getInstance().getTournament() as Tournament
         totalRounds = tournament.rounds.size
         if (busquedaParticipante && currentPlayerIndex != -1) {
             renderContestantRounds(currentPlayerIndex)

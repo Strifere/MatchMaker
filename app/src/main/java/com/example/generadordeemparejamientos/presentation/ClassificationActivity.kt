@@ -26,7 +26,7 @@ class ClassificationActivity : AppCompatActivity() {
         val backButton = findViewById<ImageButton>(R.id.backButton)
         val tableLayout = findViewById<TableLayout>(R.id.tableLayout)
 
-        tournament = DomainController.Companion.getTournament() as Tournament
+        tournament = DomainController.getInstance().getTournament() as Tournament
         @Suppress("UNCHECKED_CAST")
 
         backButton.setOnClickListener {

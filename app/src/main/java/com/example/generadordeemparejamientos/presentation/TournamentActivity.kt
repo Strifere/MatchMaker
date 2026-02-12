@@ -4,22 +4,32 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
-import android.widget.FrameLayout
+import android.widget.EditText
+import android.widget.ImageButton
+import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.generadordeemparejamientos.R
+import com.example.generadordeemparejamientos.domain.controllers.DomainController
 
 class TournamentActivity : AppCompatActivity() {
 
-    private lateinit var roundsCard: FrameLayout
-    private lateinit var playersCard: FrameLayout
-    private lateinit var tableCard: FrameLayout
-    private lateinit var classificationCard: FrameLayout
+    private lateinit var roundsCard: LinearLayout
+    private lateinit var playersCard: LinearLayout
+    private lateinit var tableCard: LinearLayout
+    private lateinit var classificationCard: LinearLayout
+
+    private lateinit var tournamentTitle: TextView
+    private lateinit var editTitleButton: ImageButton
+    private lateinit var saveTournamentButton : Button
 
     private lateinit var roundsIntent: Intent
     private lateinit var playersIntent: Intent
     private lateinit var tableIntent: Intent
     private lateinit var classificationIntent: Intent
+
+    private val domainController = DomainController.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +42,9 @@ class TournamentActivity : AppCompatActivity() {
         playersCard = findViewById(R.id.playersCard)
         tableCard = findViewById(R.id.tableCard)
         classificationCard = findViewById(R.id.classificationCard)
+        tournamentTitle = findViewById(R.id.tournamentTitle)
+        editTitleButton = findViewById(R.id.editTitleButton)
+        saveTournamentButton = findViewById(R.id.saveButton)
 
         roundsIntent = Intent(this, RoundsActivity::class.java)
         playersIntent = Intent(this, PlayersActivity::class.java)
@@ -50,6 +63,37 @@ class TournamentActivity : AppCompatActivity() {
         classificationCard.setOnClickListener {
             startActivity(classificationIntent)
         }
+
+        tournamentTitle.text = domainController.getTournament()?.name
+
+        editTitleButton.setOnClickListener {
+            val input = EditText(this).apply {
+                inputType = android.text.InputType.TYPE_CLASS_TEXT
+                setText(tournamentTitle.text)
+                setSelection(text.length) // Move cursor to the end
+            }
+
+            AlertDialog.Builder(this)
+                .setTitle("Cambiar título del torneo")
+                .setView(input)
+                .setPositiveButton("Confirmar") { _, _ ->
+                    val newName = input.text.toString().trim()
+                    if (newName.isBlank()) {
+                        Toast.makeText(this, "El título no puede estar vacío", Toast.LENGTH_SHORT).show()
+                        return@setPositiveButton
+                    }
+                    if (!domainController.changeTournamentName(newName)) {
+                        Toast.makeText(this, "Error al cambiar el título del torneo", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(this, "Título cambiado a $newName", Toast.LENGTH_SHORT).show()
+                        tournamentTitle.text = newName
+                    }
+                }
+                .setNegativeButton("Cancelar", null)
+                .show()
+        }
+
+        saveTournamentButton.setOnClickListener { saveTournament() }
     }
 
     private fun handleExit() {
@@ -62,5 +106,14 @@ class TournamentActivity : AppCompatActivity() {
             .setPositiveButton("Sí") { _, _ -> finish() }
             .setNegativeButton("No", null)
             .show()
+    }
+
+    private fun saveTournament() {
+        try {
+            domainController.saveTournament()
+            Toast.makeText(this, "El torneo se guardó", Toast.LENGTH_LONG).show()
+        } catch (e: Exception) {
+            Toast.makeText(this, "Error al guardar el torneo: ${e.message}", Toast.LENGTH_LONG).show()
+        }
     }
 }

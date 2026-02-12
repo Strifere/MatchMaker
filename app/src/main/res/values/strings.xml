@@ -66,4 +66,8 @@
     <string name="main_profile_button_description">Abrir perfil</string>
     <string name="main_secondary_button_description">Accion secundaria</string>
     <string name="main_create_tournament_description">Crear torneo</string>
+    <string name="tournamentHistory">Historial de torneos</string>
+    <string name="about">Acerca de</string>
+    <string name="settingsDescription">Configuración de la app</string>
+    <string name="editTitleDescription">Editar título del torneo</string>
 </resources>

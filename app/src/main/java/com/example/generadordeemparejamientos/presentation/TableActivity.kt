@@ -38,7 +38,7 @@ class TableActivity : AppCompatActivity() {
         val backButton = findViewById<ImageButton>(R.id.backButton)
         tableLayout = findViewById<TableLayout>(R.id.tableLayout)
 
-        tournament = DomainController.getTournament() as Tournament
+        tournament = DomainController.getInstance().getTournament() as Tournament
         numJugadores = tournament.numJugadores
         nombres = tournament.nombres
         rounds = tournament.rounds

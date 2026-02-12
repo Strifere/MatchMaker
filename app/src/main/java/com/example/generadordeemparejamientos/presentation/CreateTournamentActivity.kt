@@ -24,15 +24,13 @@ class CreateTournamentActivity : AppCompatActivity() {
         val tournamentNameEdit = findViewById<EditText>(R.id.tournamentTitle)
         val backButton = findViewById<ImageButton>(R.id.backButton)
 
-        val tournamentCreator = intent.getStringExtra("userName")
-
         backButton.setOnClickListener { finish() }
 
         submitButton.setOnClickListener {
             val numJugadores = input.text.toString().trim().toIntOrNull()
             val numSets = sets.text.toString().trim().toIntOrNull()
             val includeSets = includeSetsResults.isChecked
-            var tournamentName = tournamentNameEdit.toString().trim()
+            var tournamentName = tournamentNameEdit.text.toString().trim()
             if (tournamentName == "") tournamentName = "Nuevo Torneo ${LocalDateTime.now()}"
             if (numJugadores == null || numJugadores < 2) {
                 resultText.text = "El número de jugadores debe ser al menos 2."

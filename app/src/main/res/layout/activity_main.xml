@@ -17,24 +17,24 @@
             android:layout_height="40dp"
             android:layout_margin="8dp"
             android:background="?attr/selectableItemBackground"
-            android:tint="?attr/colorOnBackground"
             android:contentDescription="@string/navigation_drawer_open"
             android:src="@drawable/menu_svgrepo_com"
             android:scaleType="centerInside"
             app:layout_constraintStart_toStartOf="@id/guidelineStart"
-            app:layout_constraintTop_toTopOf="@id/guidelineTop" />
+            app:layout_constraintTop_toTopOf="@id/guidelineTop"
+            app:tint="?attr/colorOnBackground" />
         <ImageButton
-            android:id="@+id/profileButton"
+            android:id="@+id/settingsButton"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_margin="8dp"
             android:background="?attr/selectableItemBackground"
-            android:tint="?attr/colorOnBackground"
-            android:contentDescription="@string/main_profile_button_description"
-            android:src="@drawable/user_menu"
+            android:contentDescription="@string/settingsDescription"
+            android:src="@drawable/gear_svgrepo_com"
             android:scaleType="centerInside"
             app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
-            app:layout_constraintTop_toTopOf="@id/guidelineTop" />
+            app:layout_constraintTop_toTopOf="@id/guidelineTop"
+            app:tint="?attr/colorOnBackground" />
 
 
 
@@ -83,9 +83,9 @@
             android:contentDescription="@string/main_secondary_button_description"
             android:src="@drawable/load_list_svgrepo_com"
             android:scaleType="centerInside"
-            android:tint="@color/white"
             app:layout_constraintBottom_toBottomOf="@id/guidelineBottom"
-            app:layout_constraintStart_toStartOf="@id/guidelineStart"/>
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:tint="@color/white" />
 
         <ImageButton
             android:id="@+id/createTournamentButton"
@@ -98,7 +98,7 @@
             android:src="@drawable/baseline_add_24"
             app:layout_constraintBottom_toBottomOf="@id/guidelineBottom"
             app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
-            android:tint="@color/white"/>
+            app:tint="@color/white" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guidelineTop"
