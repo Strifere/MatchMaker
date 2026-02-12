@@ -11,7 +11,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp">
+        android:layout_marginBottom="10dp"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/tournamentName"
@@ -21,6 +22,41 @@
             android:textColor="?attr/colorOnBackground"
             android:textSize="20sp"
             android:textStyle="bold" />
+        <TextView
+            android:id="@+id/dateText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tournament creation date"
+            android:textColor="?attr/colorOnBackground"
+            android:textSize="14sp"/>
+        <TextView
+            android:id="@+id/modifiedText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tournament modification date"
+            android:textColor="?attr/colorOnBackground"
+            android:textSize="14sp"/>
+        <TextView
+            android:id="@+id/playersText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tournament players count"
+            android:textColor="?attr/colorOnBackground"
+            android:textSize="14sp"/>
+        <TextView
+            android:id="@+id/bestOfText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Best of sets"
+            android:textColor="?attr/colorOnBackground"
+            android:textSize="14sp"/>
+        <TextView
+            android:id="@+id/setsIncludedText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Incluye resultado de sets / No incluye resultado de sets"
+            android:textColor="?attr/colorOnBackground"
+            android:textSize="14sp"/>
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -30,31 +66,51 @@
         <Button
             android:id="@+id/loadButton"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:text="Cargar Torneo"
             android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/guidelineMiddle"
+            app:layout_constraintEnd_toStartOf="@id/guideline1"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginEnd="4dp"/>
         <Button
             android:id="@+id/deleteButton"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:text="Eliminar Torneo"
             android:backgroundTint="@android:color/holo_red_dark"
             android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="@id/guidelineMiddle"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guideline1"
+            app:layout_constraintEnd_toStartOf="@id/guideline2"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginStart="4dp"/>
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"/>
+
+        <ImageButton
+            android:id="@+id/shareButton"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="4dp"
+            android:background="@drawable/circular_button_background"
+            android:backgroundTint="@android:color/holo_green_dark"
+            android:src="@android:drawable/ic_menu_share"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/guideline2"
+            app:layout_constraintTop_toTopOf="parent" />
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guidelineMiddle"
+            android:id="@+id/guideline1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.5"/>
+            app:layout_constraintGuide_percent="0.4"/>
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.8"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

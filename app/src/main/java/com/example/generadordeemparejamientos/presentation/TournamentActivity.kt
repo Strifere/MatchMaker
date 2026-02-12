@@ -91,9 +91,13 @@ class TournamentActivity : AppCompatActivity() {
                             Toast.makeText(this@TournamentActivity, "Ya existe un torneo con ese nombre. Por favor, elija otro.", Toast.LENGTH_SHORT).show()
                             cancel()
                         } else {
-                            Toast.makeText(this@TournamentActivity, "Título cambiado a $newName", Toast.LENGTH_SHORT).show()
-                            tournamentTitle.text = newName
-                            DomainController.getInstance().getTournament()?.name = newName
+                            val updated = domainController.updateTournamentName(newName)
+                            if (updated) {
+                                Toast.makeText(this@TournamentActivity, "Título cambiado a $newName", Toast.LENGTH_SHORT).show()
+                                tournamentTitle.text = newName
+                            } else {
+                                Toast.makeText(this@TournamentActivity, "No se pudo actualizar el nombre del torneo", Toast.LENGTH_SHORT).show()
+                            }
                         }
                     }
                 }
@@ -111,7 +115,10 @@ class TournamentActivity : AppCompatActivity() {
                 text = "¿Estás seguro de que quieres salir del torneo? Se perderán todos los datos no guardados."
                 setPadding(50, 40, 50, 40)
             })
-            .setPositiveButton("Sí") { _, _ -> finish() }
+            .setPositiveButton("Sí") { _, _ ->
+                startActivity(Intent(this, MainActivity::class.java))
+                finish()
+            }
             .setNegativeButton("No", null)
             .show()
     }

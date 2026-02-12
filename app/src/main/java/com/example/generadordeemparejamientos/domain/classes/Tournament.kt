@@ -11,11 +11,14 @@ import java.util.SortedMap
  * @property nombres Array of player names, indexed by player number.
  * @property bestOf Number of maximum sets of a match. To win a match, a player has to win (bestOf / 2) + 1 sets (e.g., 2 for best of 3, 3 for best of 5).
  * @property includeSetResults Flag that indicates whether the tournament should keep track of individual set results for each match.
+ * @property createdAt Timestamp (epoch millis) when the tournament was created.
  *
  * @constructor Initializes the tournament by generating the rounds and matchups based on the provided player names and matchup table.
  */
 class Tournament (
     var name: String,
+    var createdAt: Long = System.currentTimeMillis(),
+    var modifiedAt: Long = System.currentTimeMillis(),
     var rounds: MutableList<Round> = mutableListOf(),
     val players: Array<Player>,
     val bestOf: Int,

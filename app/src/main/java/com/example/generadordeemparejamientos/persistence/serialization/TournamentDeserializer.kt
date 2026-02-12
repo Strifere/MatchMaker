@@ -103,6 +103,7 @@ class TournamentDeserializer : JsonDeserializer<Tournament> {
         // Create and return the tournament with correct references
         return Tournament(
             name = jsonObject.get("name").asString,
+            createdAt = jsonObject.get("createdAt").asLong,
             rounds = rounds,
             players = players,
             bestOf = jsonObject.get("bestOf").asInt,

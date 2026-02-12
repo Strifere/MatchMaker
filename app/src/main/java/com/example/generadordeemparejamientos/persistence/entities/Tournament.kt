@@ -5,6 +5,6 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "tournament")
 data class TournamentEntity(
-    @PrimaryKey val name: String,
+    @PrimaryKey var name: String,
     val tournamentJson: String
 )

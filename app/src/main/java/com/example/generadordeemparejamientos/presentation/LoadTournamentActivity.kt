@@ -10,6 +10,7 @@ import android.widget.LinearLayout
 import android.widget.SearchView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -17,6 +18,8 @@ import com.example.generadordeemparejamientos.R
 import com.example.generadordeemparejamientos.domain.classes.Tournament
 import com.example.generadordeemparejamientos.domain.controllers.DomainController
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class LoadTournamentActivity : AppCompatActivity() {
 
@@ -25,6 +28,26 @@ class LoadTournamentActivity : AppCompatActivity() {
     private lateinit var loadTournamentsTitle: TextView
     private val domainController = DomainController.getInstance()
     private var allTournaments: List<Tournament> = emptyList()
+    private var pendingExportTournament: Tournament? = null
+
+    private val exportTournamentLauncher = registerForActivityResult(
+        ActivityResultContracts.CreateDocument("application/json")
+    ) { uri ->
+        val tournament = pendingExportTournament
+        if (uri == null || tournament == null) {
+            pendingExportTournament = null
+            return@registerForActivityResult
+        }
+
+        domainController.exportTournament(this, tournament, uri) { success, error ->
+            if (success) {
+                Toast.makeText(this, "Torneo exportado correctamente", Toast.LENGTH_LONG).show()
+            } else {
+                Toast.makeText(this, "Error al exportar el torneo: $error", Toast.LENGTH_LONG).show()
+            }
+            pendingExportTournament = null
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -96,16 +119,32 @@ class LoadTournamentActivity : AppCompatActivity() {
         val cardView = inflater.inflate(R.layout.tournament_card, tournamentsContainer, false)
 
         val tournamentNameView = cardView.findViewById<TextView>(R.id.tournamentName)
+        val tournamentDateText = cardView.findViewById<TextView>(R.id.dateText)
+        val modifiedDateText = cardView.findViewById<TextView>(R.id.modifiedText)
+        val tournamentPlayersText = cardView.findViewById<TextView>(R.id.playersText)
+        val bestoOfText = cardView.findViewById<TextView>(R.id.bestOfText)
+        val includeSetsText = cardView.findViewById<TextView>(R.id.setsIncludedText)
         val loadButton = cardView.findViewById<Button>(R.id.loadButton)
         val deleteButton = cardView.findViewById<Button>(R.id.deleteButton)
+        val shareButton = cardView.findViewById<ImageButton>(R.id.shareButton)
 
         tournamentNameView.text = tournament.name
+        tournamentDateText.text = "Creado el: ${SimpleDateFormat("dd/MM/yyyy, HH:mm", Locale.getDefault()).format(tournament.createdAt)}"
+        modifiedDateText.text = "Última modificación: ${SimpleDateFormat("dd/MM/yyyy, HH:mm", Locale.getDefault()).format(tournament.modifiedAt)}"
+
+        tournamentPlayersText.text = "Jugadores: ${tournament.players.size}"
+        bestoOfText.text = "Mejor de: ${tournament.bestOf} sets"
+        includeSetsText.text = if (tournament.includeSetResults) "Incluye resultados de sets" else "No incluye resultados de sets"
 
         loadButton.setOnClickListener {
             loadTournament(tournament)
         }
         deleteButton.setOnClickListener {
             deleteTournament(tournament)
+        }
+        shareButton.setOnClickListener {
+            pendingExportTournament = tournament
+            exportTournamentLauncher.launch("${tournament.name}.json")
         }
 
         tournamentsContainer.addView(cardView)

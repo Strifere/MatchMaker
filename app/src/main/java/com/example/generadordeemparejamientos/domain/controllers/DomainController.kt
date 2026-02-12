@@ -1,6 +1,7 @@
 package com.example.generadordeemparejamientos.domain.controllers
 
 import android.content.Context
+import android.net.Uri
 import com.example.generadordeemparejamientos.domain.classes.Player
 import com.example.generadordeemparejamientos.domain.classes.Tournament
 import com.example.generadordeemparejamientos.persistence.controllers.PersistenceController
@@ -44,16 +45,20 @@ class DomainController private constructor() {
         return currentTournament
     }
 
-    suspend fun changeTournamentName(newName: String): Boolean {
-        val tournament = getTournament() ?: return false
-        // Here the persistence controller will check that the name is not registered in the app data
-        if (persistenceController.getTournamentByName(newName).isNotEmpty()) return false
-        tournament.name = newName
-        return true
-    }
-
     fun saveTournament(onComplete: (Boolean, String?) -> Unit) {
         persistenceController.saveTournament(currentTournament, onComplete)
+    }
+
+    fun exportTournament(context: Context, tournament: Tournament, uri: Uri, onComplete: (Boolean, String?) -> Unit) {
+        persistenceController.exportTournament(context, tournament, uri, onComplete)
+    }
+
+    suspend fun importTournament(context: Context, uri: Uri): Tournament? {
+        return persistenceController.importTournament(context, uri)
+    }
+
+    suspend fun updateTournamentName(newName: String): Boolean {
+        return persistenceController.updateTournamentName(currentTournament, newName)
     }
 
     suspend fun loadTournament(name: String): Tournament? {
@@ -85,6 +90,7 @@ class DomainController private constructor() {
         val players = createPlayersList(numJugadores, nombres)
         val tournament = Tournament(
             name = name,
+            createdAt = System.currentTimeMillis(),
             players = players,
             bestOf = numSets,
             includeSetResults = includeSetsResults
