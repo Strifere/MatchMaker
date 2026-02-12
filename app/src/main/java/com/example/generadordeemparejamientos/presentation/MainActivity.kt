@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.generadordeemparejamientos.R
+import com.example.generadordeemparejamientos.domain.controllers.DomainController
 import com.google.android.material.navigation.NavigationView
 
 class MainActivity : AppCompatActivity() {
@@ -14,10 +15,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // Initialize DomainController with application context
+        DomainController.getInstance().initialize(applicationContext)
+
         val drawerLayout = findViewById<DrawerLayout>(R.id.mainDrawer)
         val navView = findViewById<NavigationView>(R.id.mainNavView)
         val menuButton = findViewById<ImageButton>(R.id.menuButton)
         val createButton = findViewById<ImageButton>(R.id.createTournamentButton)
+        val loadButton = findViewById<ImageButton>(R.id.loadTournamentButton)
 
         menuButton.setOnClickListener {
             drawerLayout.openDrawer(GravityCompat.START)
@@ -31,6 +36,11 @@ class MainActivity : AppCompatActivity() {
 
         createButton.setOnClickListener {
             val intent = Intent(this, CreateTournamentActivity::class.java)
+            startActivity(intent)
+        }
+
+        loadButton.setOnClickListener {
+            val intent = Intent(this, LoadTournamentActivity::class.java)
             startActivity(intent)
         }
     }

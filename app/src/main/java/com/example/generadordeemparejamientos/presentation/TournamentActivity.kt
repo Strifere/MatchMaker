@@ -10,8 +10,11 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.example.generadordeemparejamientos.R
 import com.example.generadordeemparejamientos.domain.controllers.DomainController
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 
 class TournamentActivity : AppCompatActivity() {
 
@@ -82,11 +85,16 @@ class TournamentActivity : AppCompatActivity() {
                         Toast.makeText(this, "El título no puede estar vacío", Toast.LENGTH_SHORT).show()
                         return@setPositiveButton
                     }
-                    if (!domainController.changeTournamentName(newName)) {
-                        Toast.makeText(this, "Error al cambiar el título del torneo", Toast.LENGTH_SHORT).show()
-                    } else {
-                        Toast.makeText(this, "Título cambiado a $newName", Toast.LENGTH_SHORT).show()
-                        tournamentTitle.text = newName
+                    lifecycleScope.launch {
+                        val nameExists = domainController.getTournamentsByName(newName).isNotEmpty()
+                        if (nameExists) {
+                            Toast.makeText(this@TournamentActivity, "Ya existe un torneo con ese nombre. Por favor, elija otro.", Toast.LENGTH_SHORT).show()
+                            cancel()
+                        } else {
+                            Toast.makeText(this@TournamentActivity, "Título cambiado a $newName", Toast.LENGTH_SHORT).show()
+                            tournamentTitle.text = newName
+                            DomainController.getInstance().getTournament()?.name = newName
+                        }
                     }
                 }
                 .setNegativeButton("Cancelar", null)
@@ -110,8 +118,13 @@ class TournamentActivity : AppCompatActivity() {
 
     private fun saveTournament() {
         try {
-            domainController.saveTournament()
-            Toast.makeText(this, "El torneo se guardó", Toast.LENGTH_LONG).show()
+            domainController.saveTournament { success, error ->
+                if (success) {
+                    Toast.makeText(this, "Torneo guardado correctamente", Toast.LENGTH_LONG).show()
+                } else {
+                    Toast.makeText(this, "Error al guardar el torneo: $error", Toast.LENGTH_LONG).show()
+                }
+            }
         } catch (e: Exception) {
             Toast.makeText(this, "Error al guardar el torneo: ${e.message}", Toast.LENGTH_LONG).show()
         }

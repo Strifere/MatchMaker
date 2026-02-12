@@ -73,7 +73,7 @@
             app:layout_constraintTop_toBottomOf="@id/mainTitle" />
 
         <ImageButton
-            android:id="@+id/secondaryActionButton"
+            android:id="@+id/loadTournamentButton"
             android:padding="10dp"
             android:layout_width="56dp"
             android:layout_height="56dp"

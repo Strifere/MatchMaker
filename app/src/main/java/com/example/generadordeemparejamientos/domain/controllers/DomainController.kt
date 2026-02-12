@@ -1,5 +1,6 @@
 package com.example.generadordeemparejamientos.domain.controllers
 
+import android.content.Context
 import com.example.generadordeemparejamientos.domain.classes.Player
 import com.example.generadordeemparejamientos.domain.classes.Tournament
 import com.example.generadordeemparejamientos.persistence.controllers.PersistenceController
@@ -23,6 +24,10 @@ class DomainController private constructor() {
     private val persistenceController: PersistenceController
         get() = PersistenceController.getInstance()
 
+    fun initialize(context: Context) {
+        persistenceController.initialize(context)
+    }
+
     /**
      * Sets the current tournament.
      * @param tournament The [Tournament] object to be stored as the current tournament.
@@ -37,6 +42,34 @@ class DomainController private constructor() {
      */
     fun getTournament(): Tournament? {
         return currentTournament
+    }
+
+    suspend fun changeTournamentName(newName: String): Boolean {
+        val tournament = getTournament() ?: return false
+        // Here the persistence controller will check that the name is not registered in the app data
+        if (persistenceController.getTournamentByName(newName).isNotEmpty()) return false
+        tournament.name = newName
+        return true
+    }
+
+    fun saveTournament(onComplete: (Boolean, String?) -> Unit) {
+        persistenceController.saveTournament(currentTournament, onComplete)
+    }
+
+    suspend fun loadTournament(name: String): Tournament? {
+        return persistenceController.loadTournament(name)
+    }
+
+    suspend fun getAllTournaments(): List<Tournament> {
+        return persistenceController.getAllTournaments()
+    }
+
+    suspend fun getTournamentsByName(name: String): List<Tournament> {
+        return persistenceController.getTournamentByName(name)
+    }
+
+    suspend fun deleteTournament(name: String): Boolean {
+        return persistenceController.deleteTournament(name)
     }
 
     /**
@@ -131,16 +164,5 @@ class DomainController private constructor() {
             players[i] = player
         }
         return players
-    }
-
-    fun changeTournamentName(newName: String): Boolean {
-        val tournament = getTournament() ?: return false
-        // Here the persistence controller will check that the name is not registered in the app data
-        tournament.name = newName
-        return true
-    }
-
-    fun saveTournament() {
-        persistenceController.saveTournament(currentTournament)
     }
 }

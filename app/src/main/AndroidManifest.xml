@@ -40,5 +40,8 @@
         <activity
             android:name=".presentation.CreateTournamentActivity"
             android:exported="false" />
+        <activity
+            android:name=".presentation.LoadTournamentActivity"
+            android:exported="false" />
     </application>
 </manifest>

@@ -8,7 +8,11 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.example.generadordeemparejamientos.R
+import com.example.generadordeemparejamientos.domain.controllers.DomainController
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 
 class CreateTournamentActivity : AppCompatActivity() {
@@ -27,31 +31,42 @@ class CreateTournamentActivity : AppCompatActivity() {
         backButton.setOnClickListener { finish() }
 
         submitButton.setOnClickListener {
-            val numJugadores = input.text.toString().trim().toIntOrNull()
-            val numSets = sets.text.toString().trim().toIntOrNull()
-            val includeSets = includeSetsResults.isChecked
-            var tournamentName = tournamentNameEdit.text.toString().trim()
-            if (tournamentName == "") tournamentName = "Nuevo Torneo ${LocalDateTime.now()}"
-            if (numJugadores == null || numJugadores < 2) {
-                resultText.text = "El número de jugadores debe ser al menos 2."
-                return@setOnClickListener
-            }
-            if (numSets == null) {
-                resultText.text = "Introduzca el número de sets máximo por partido."
-                return@setOnClickListener
-            } else if (numSets%2 == 0) {
-                resultText.text = "El número de sets debe ser impar."
-                return@setOnClickListener
-            }
+            lifecycleScope.launch {
+                val numJugadores = input.text.toString().trim().toIntOrNull()
+                val numSets = sets.text.toString().trim().toIntOrNull()
+                val includeSets = includeSetsResults.isChecked
+                var tournamentName = tournamentNameEdit.text.toString().trim()
+                if (tournamentName.isBlank()) tournamentName = "Nuevo Torneo ${LocalDateTime.now()}"
 
-            // Navigate to NamesActivity
-            val intent = Intent(this, NamesActivity::class.java)
-            intent.putExtra("numJugadores", numJugadores)
-            intent.putExtra("numSets", numSets)
-            intent.putExtra("includeSetsResults", includeSetsResults.isChecked)
-            intent.putExtra("includeSetsResults", includeSets)
-            intent.putExtra("tournamentName", tournamentName)
-            startActivity(intent)
+                val tournamentExists = DomainController.getInstance().getTournamentsByName(tournamentName).isNotEmpty()
+                if (tournamentExists) {
+                    resultText.text = "Ya existe un torneo con ese nombre. Por favor, elija otro."
+                    return@launch
+                }
+                if (numJugadores == null || numJugadores < 2) {
+                    resultText.text = "El número de jugadores debe ser al menos 2."
+                    return@launch
+                }
+                if (numSets == null) {
+                    resultText.text = "Introduzca el número de sets máximo por partido."
+                    return@launch
+                } else if (numSets%2 == 0) {
+                    resultText.text = "El número de sets debe ser impar."
+                    return@launch
+                }
+
+                // Navigate to NamesActivity
+                namesActivity(numJugadores, numSets, includeSets, tournamentName)
+            }
         }
+    }
+
+    private fun namesActivity(numJugadores: Int, numSets: Int, includeSets: Boolean, tournamentName: String) {
+        val intent = Intent(this, NamesActivity::class.java)
+        intent.putExtra("numJugadores", numJugadores)
+        intent.putExtra("numSets", numSets)
+        intent.putExtra("includeSetsResults", includeSets)
+        intent.putExtra("tournamentName", tournamentName)
+        startActivity(intent)
     }
 }
