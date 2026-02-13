@@ -7,8 +7,8 @@ import com.example.generadordeemparejamientos.domain.classes.Tournament
 import com.example.generadordeemparejamientos.persistence.controllers.PersistenceController
 
 /**
- * DomainController is a singleton class that extends Application and is used to store the current tournament data.
- * It provides methods to set, get, and clear the current tournament.
+ * DomainController is a singleton class that is used to manage the current tournament data.
+ * It provides methods to set, get, and clear the current tournament, and so communication with the persistence layer.
  */
 class DomainController private constructor() {
     companion object {
@@ -21,10 +21,12 @@ class DomainController private constructor() {
                 instance ?: DomainController().also { instance = it }
             }
     }
-
     private val persistenceController: PersistenceController
         get() = PersistenceController.getInstance()
 
+    /**
+     * Initializes the [DomainController] and also the [PersistenceController]
+     */
     fun initialize(context: Context) {
         persistenceController.initialize(context)
     }
@@ -45,34 +47,79 @@ class DomainController private constructor() {
         return currentTournament
     }
 
+    /**
+     * Calls the [PersistenceController] to save the tournament data in the database.
+     * @param onComplete acts as a mechanism to know if the transaction was successful or not and the reason why.
+     */
     fun saveTournament(onComplete: (Boolean, String?) -> Unit) {
         persistenceController.saveTournament(currentTournament, onComplete)
     }
 
+    /**
+     * Calls the [persistenceController] to export a given tournament in a given location.
+     * @param context the context from where the export is being done.
+     * @param tournament the [Tournament] object that will be exported.
+     * @param uri the URI where [tournament] will be exported.
+     * @param onComplete acts as a mechanism to know if the transaction was successful or not and the reason why.
+     */
     fun exportTournament(context: Context, tournament: Tournament, uri: Uri, onComplete: (Boolean, String?) -> Unit) {
         persistenceController.exportTournament(context, tournament, uri, onComplete)
     }
 
+    /**
+     * Calls the [persistenceController] to import a tournament from a given location.
+     * @param context the context from where the import is being done.
+     * @param uri the URI where the [Tournament] object is being imported.
+     * @return the [Tournament] object that has been imported or null if something went wrong.
+     */
     suspend fun importTournament(context: Context, uri: Uri): Tournament? {
         return persistenceController.importTournament(context, uri)
     }
 
+    /**
+     * Calls the [persistenceController] to update the name of the [currentTournament] in the database.
+     * @param newName the new name that the [currentTournament] will have.
+     * @return
+     *  - true: the name of the [currentTournament] was updated in the database.
+     *  - false: the name of the [currentTournament] was not updated in the database (it doesn't exist or the name is already in use).
+     */
     suspend fun updateTournamentName(newName: String): Boolean {
         return persistenceController.updateTournamentName(currentTournament, newName)
     }
 
+    /**
+     * Calls the [persistenceController] to load a tournament that is identified by the given name
+     * @param name the identifier of the [Tournament] object that is being loaded.
+     * @return a [Tournament] object identified by [name] or null if no tournament in the database is identified by that [name].
+     */
     suspend fun loadTournament(name: String): Tournament? {
         return persistenceController.loadTournament(name)
     }
 
+    /**
+     * Calls the [persistenceController] to get all the tournaments in the database.
+     * @return a [List] of [Tournament] objects that have been loaded from the database.
+     */
     suspend fun getAllTournaments(): List<Tournament> {
         return persistenceController.getAllTournaments()
     }
 
-    suspend fun getTournamentsByName(name: String): List<Tournament> {
+    /**
+     * Calls the [persistenceController] to get the tournament in the database that has the given name.
+     * @param name the identifier of the [Tournament] object that will be returned.
+     * @return a [Tournament] object identified by [name] or null if there is no tournament in the database with that [name].
+     */
+    suspend fun getTournamentsByName(name: String): Tournament? {
         return persistenceController.getTournamentByName(name)
     }
 
+    /**
+     * Calls the [persistenceController] to delete the tournament in the database that is identified by the given name.
+     * @param name the name of the tournament that is being targeted for deletion
+     * @return
+     *  - true: if there was a tournament in the database that was identified by [name] was deleted
+     *  - false: if there was no tournament in the database that is identified by [name]
+     */
     suspend fun deleteTournament(name: String): Boolean {
         return persistenceController.deleteTournament(name)
     }

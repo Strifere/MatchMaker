@@ -37,7 +37,7 @@ class CreateTournamentActivity : AppCompatActivity() {
                 var tournamentName = tournamentNameEdit.text.toString().trim()
                 if (tournamentName.isBlank()) tournamentName = "Nuevo Torneo ${LocalDateTime.now()}"
 
-                val tournamentExists = DomainController.getInstance().getTournamentsByName(tournamentName).isNotEmpty()
+                val tournamentExists = DomainController.getInstance().getTournamentsByName(tournamentName) != null
                 if (tournamentExists) {
                     resultText.text = "Ya existe un torneo con ese nombre. Por favor, elija otro."
                     return@launch

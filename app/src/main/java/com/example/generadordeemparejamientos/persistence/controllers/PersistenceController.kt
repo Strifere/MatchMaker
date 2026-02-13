@@ -174,24 +174,22 @@ class PersistenceController private constructor() {
         }
     }
 
-    suspend fun getTournamentByName(name: String): List<Tournament> {
-        val db = database ?: return emptyList()
+    suspend fun getTournamentByName(name: String): Tournament? {
+        val db = database ?: return null
         return withContext(Dispatchers.IO) {
             try {
                 val entity = db.tournamentDAO.getTournamentByName(name)
                 if (entity != null) {
-                    listOfNotNull(
                         try {
                             gson.fromJson(entity.tournamentJson, Tournament::class.java)
                         } catch (_: Exception) {
                             null
                         }
-                    )
                 } else {
-                    emptyList()
+                    null
                 }
             } catch (_: Exception) {
-                emptyList()
+                null
             }
         }
     }

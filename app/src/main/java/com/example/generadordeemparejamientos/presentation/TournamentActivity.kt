@@ -86,7 +86,7 @@ class TournamentActivity : AppCompatActivity() {
                         return@setPositiveButton
                     }
                     lifecycleScope.launch {
-                        val nameExists = domainController.getTournamentsByName(newName).isNotEmpty()
+                        val nameExists = domainController.getTournamentsByName(newName) != null
                         if (nameExists) {
                             Toast.makeText(this@TournamentActivity, "Ya existe un torneo con ese nombre. Por favor, elija otro.", Toast.LENGTH_SHORT).show()
                             cancel()
