@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     id("com.google.devtools.ksp")
+    alias(libs.plugins.kotlin.compose)
 }
 
 repositories {
@@ -41,6 +42,12 @@ android {
     lint {
         checkReleaseBuilds = false
         abortOnError = false
+    }
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.10.3"
     }
 }
 
@@ -86,4 +93,8 @@ dependencies {
 
     // optional - Paging 3 Integration
     implementation("androidx.room:room-paging:$room_version")
+
+    implementation("androidx.activity:activity-compose:1.12.4")
+    implementation("androidx.compose.material:material:1.10.3")
+
 }

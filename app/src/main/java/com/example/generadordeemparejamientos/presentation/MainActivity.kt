@@ -4,8 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.Toast
+import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.runtime.Composable
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.lifecycleScope
@@ -17,7 +19,12 @@ import kotlinx.coroutines.launch
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        //setContentView(R.layout.activity_main)
+
+        setContent {
+            // TODO: Implement Main Screen with Jetpack Compose
+             MainScreen()
+        }
 
         // Initialize DomainController with application context
         DomainController.getInstance().initialize(applicationContext)
@@ -73,4 +80,10 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
+}
+
+@Composable
+fun MainScreen() {
+
+
 }
