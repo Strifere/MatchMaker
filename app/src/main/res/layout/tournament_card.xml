@@ -66,9 +66,8 @@
         <Button
             android:id="@+id/loadButton"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:text="Cargar Torneo"
-            android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/guideline1"
             app:layout_constraintTop_toTopOf="parent"
@@ -80,7 +79,6 @@
             android:layout_height="match_parent"
             android:text="Eliminar Torneo"
             android:backgroundTint="@android:color/holo_red_dark"
-            android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="@id/guideline1"
             app:layout_constraintEnd_toStartOf="@id/guideline2"
             app:layout_constraintTop_toTopOf="parent"
@@ -93,13 +91,12 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="4dp"
-            android:background="@drawable/circular_button_background"
-            android:backgroundTint="@android:color/holo_green_dark"
             android:src="@android:drawable/ic_menu_share"
+            android:backgroundTint="@android:color/holo_green_dark"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/guideline2"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"/>
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline1"
             android:layout_width="wrap_content"

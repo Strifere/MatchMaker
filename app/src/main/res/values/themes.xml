@@ -1,18 +1,18 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="Base.Theme.GeneradorDeEmparejamientos" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base.Theme.MatchMaker" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
-    <style name="Theme.GeneradorDeEmparejamientos" parent="Base.Theme.GeneradorDeEmparejamientos" />
+    <style name="Theme.MatchMaker" parent="Base.Theme.MatchMaker" />
 
-    <style name="Theme.GeneradorDeEmparejamientos.NoActionBar">
+    <style name="Theme.MatchMaker.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="Theme.GeneradorDeEmparejamientos.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.MatchMaker.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="Theme.GeneradorDeEmparejamientos.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="Theme.MatchMaker.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Generador de emparejamientos</string>
+    <string name="app_name">Match Maker</string>
     <string name="introduce_cantidad_de_jugadores">Introduce cantidad de jugadores</string>
     <string name="siguiente">Siguiente</string>
     <string name="texto_entrada">Introduce los parámetros necesarios para definir la competición.</string>
