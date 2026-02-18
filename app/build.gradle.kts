@@ -9,13 +9,13 @@ repositories {
 }
 
 android {
-    namespace = "com.example.generadordeemparejamientos"
+    namespace = "com.example.matchmaker"
     compileSdk {
         version = release(36)
     }
 
     defaultConfig {
-        applicationId = "com.example.generadordeemparejamientos"
+        applicationId = "com.example.matchmaker"
         minSdk = 26
         targetSdk = 36
         versionCode = 1
@@ -57,6 +57,7 @@ dependencies {
 }
 
 dependencies {
+    implementation(libs.androidx.lifecycle.process)
     val room_version = "2.8.4"
 
     implementation("androidx.room:room-runtime:$room_version")
