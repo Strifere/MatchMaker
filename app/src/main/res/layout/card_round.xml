@@ -11,7 +11,7 @@
         android:id="@+id/roundTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ronda 1"
+        android:text="@string/round"
         android:textSize="20sp"
         android:textStyle="bold"
         android:layout_marginBottom="12dp"
@@ -27,7 +27,7 @@
         android:id="@+id/byeText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Libre: Player"
+        android:text="@string/bye_player"
         android:textSize="14sp"
         android:layout_marginTop="8dp"
         android:visibility="gone" />

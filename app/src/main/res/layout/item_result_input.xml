@@ -20,29 +20,33 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Player 1"
+            android:text="@string/player_placeholder"
             android:textSize="14sp"
             android:gravity="end"
-            android:paddingEnd="8dp" />
+            android:paddingEnd="8dp"
+            android:paddingStart="8dp"/>
 
         <EditText
             android:id="@+id/resultPlayer1Score"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
+            android:autofillHints="0..2"
             android:inputType="number"
             android:gravity="center"
             android:textSize="14sp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=" - "
-            android:textSize="14sp" />
+        <View
+            android:layout_width="10dp"
+            android:layout_height="2dp"
+            android:background="?attr/colorOnBackground"
+            android:layout_marginEnd="4dp"
+            android:layout_marginStart="4dp"/>
 
         <EditText
             android:id="@+id/resultPlayer2Score"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
+            android:autofillHints="0..2"
             android:inputType="number"
             android:gravity="center"
             android:textSize="14sp" />
@@ -52,10 +56,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Player 2"
+            android:text="@string/player_placeholder"
             android:textSize="14sp"
             android:gravity="start"
-            android:paddingStart="8dp" />
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"/>
 
     </LinearLayout>
 

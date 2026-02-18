@@ -17,7 +17,7 @@
             android:id="@+id/playerName"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="Player Name"
+            android:text="@string/player_name"
             android:textColor="?attr/colorOnBackground"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -42,43 +42,43 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ranking"
+                android:text="@string/ranking"
                 android:textAlignment="center"
                 android:textStyle="bold" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="PJ"
+                android:text="@string/played_games"
                 android:textAlignment="center"
                 android:textStyle="bold" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="PG"
+                android:text="@string/won_games"
                 android:textAlignment="center"
                 android:textStyle="bold" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="PP"
+                android:text="@string/lost_games"
                 android:textAlignment="center"
                 android:textStyle="bold" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="SF"
+                android:text="@string/won_sets"
                 android:textAlignment="center"
                 android:textStyle="bold" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="SC"
+                android:text="@string/lost_sets"
                 android:textAlignment="center"
                 android:textStyle="bold" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Puntos"
+                android:text="@string/points"
                 android:textAlignment="center"
                 android:textStyle="bold" />
         </TableRow>
@@ -143,6 +143,6 @@
         android:id="@+id/playerMatchesButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Ver partidos"
+        android:text="@string/player_matches_button"
         android:layout_marginTop="8dp"/>
 </LinearLayout>

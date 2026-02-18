@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Match Maker</string>
+    <string name="introduce_cantidad_de_jugadores">Introdueix la quantitat de jugadors</string>
+    <string name="siguiente">Següent</string>
+    <string name="texto_entrada">Introdueix els parámetres necessaris per definir la competició.</string>
+</resources>

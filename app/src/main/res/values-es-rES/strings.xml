@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Match Maker</string>
+    <string name="introduce_cantidad_de_jugadores">Introduce cantidad de jugadores</string>
+    <string name="siguiente">Siguiente</string>
+    <string name="texto_entrada">Introduce los parámetros necesarios para definir la competición.</string>
+    <string name="names_input_title">Introduce los nombres</string>
+    <string name="generate_tournament">Generar Torneo</string>
+    <string name="generate_no_names">Generar sin nombres</string>
+    <string name="tournament_name">Nombre del torneo</string>
+    <string name="tournament_creation_date">Fecha de creación:</string>
+    <string name="tournament_modification_date">Fecha de modificación:</string>
+    <string name="tournament_players_count">Cantidad de participantes</string>
+    <string name="best_of_sets">Al mejor de:</string>
+    <string name="include_set_results_card">Incluye resultado de sets / No incluye resultado de sets</string>
+    <string name="load_tournament">Cargar Torneo</string>
+    <string name="delete_tournament">Eliminar Torneo</string>
+    <string name="export_tournament">Exportar el torneo a un archivo JSON.</string>
+    <string name="player_name">Nombre del jugador</string>
+    <string name="played_games">PJ</string>
+    <string name="won_games">PG</string>
+    <string name="lost_games">PP</string>
+    <string name="won_sets">SF</string>
+    <string name="lost_sets">SC</string>
+    <string name="points">Puntos</string>
+    <string name="player_matches_button">Ver partidos</string>
+    <string name="player_placeholder">Jugador X</string>
+    <string name="round">Ronda X</string>
+    <string name="bye_player">Libre:</string>
+    <string name="saved_tournaments">Torneos Guardados</string>
+    <string name="tournament_title_indicator">Título del torneo:</string>
+    <string name="tournament_name_default">Nuevo Torneo</string>
+    <string name="tournament_title_hint">Introduzca el título del torneo</string>
+    <string name="number_of_players">Número de jugadores:</string>
+    <string name="number_of_players_hint">Num. jugadores</string>
+</resources>

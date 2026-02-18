@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Match Maker</string>
+    <string name="introduce_cantidad_de_jugadores">Input the number of players</string>
+    <string name="siguiente">Next</string>
+    <string name="texto_entrada">Input the necessary parameters to define the tournament.</string>
+</resources>

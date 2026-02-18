@@ -18,7 +18,7 @@
             android:id="@+id/tournamentName"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="Tournament Name"
+            android:text="@string/tournament_name"
             android:textColor="?attr/colorOnBackground"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -26,35 +26,35 @@
             android:id="@+id/dateText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Tournament creation date"
+            android:text="@string/tournament_creation_date"
             android:textColor="?attr/colorOnBackground"
             android:textSize="14sp"/>
         <TextView
             android:id="@+id/modifiedText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Tournament modification date"
+            android:text="@string/tournament_modification_date"
             android:textColor="?attr/colorOnBackground"
             android:textSize="14sp"/>
         <TextView
             android:id="@+id/playersText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Tournament players count"
+            android:text="@string/tournament_players_count"
             android:textColor="?attr/colorOnBackground"
             android:textSize="14sp"/>
         <TextView
             android:id="@+id/bestOfText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Best of sets"
+            android:text="@string/best_of_sets"
             android:textColor="?attr/colorOnBackground"
             android:textSize="14sp"/>
         <TextView
             android:id="@+id/setsIncludedText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Incluye resultado de sets / No incluye resultado de sets"
+            android:text="@string/include_set_results_card"
             android:textColor="?attr/colorOnBackground"
             android:textSize="14sp"/>
     </LinearLayout>
@@ -67,7 +67,7 @@
             android:id="@+id/loadButton"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:text="Cargar Torneo"
+            android:text="@string/load_tournament"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/guideline1"
             app:layout_constraintTop_toTopOf="parent"
@@ -77,7 +77,7 @@
             android:id="@+id/deleteButton"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:text="Eliminar Torneo"
+            android:text="@string/delete_tournament"
             android:backgroundTint="@android:color/holo_red_dark"
             app:layout_constraintStart_toStartOf="@id/guideline1"
             app:layout_constraintEnd_toStartOf="@id/guideline2"
@@ -91,6 +91,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="4dp"
+            android:contentDescription="@string/export_tournament"
             android:src="@android:drawable/ic_menu_share"
             android:backgroundTint="@android:color/holo_green_dark"
             app:layout_constraintBottom_toBottomOf="parent"

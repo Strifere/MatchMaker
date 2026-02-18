@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_weight="1"
-            android:text="Introduce los nombres"
+            android:text="@string/names_input_title"
             android:textColor="?attr/colorOnBackground"
             android:textSize="22sp"
             android:textStyle="bold" />
@@ -58,7 +58,7 @@
         android:id="@+id/generateButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Generar Emparejamientos"
+        android:text="@string/generate_tournament"
         android:layout_marginTop="8dp"
         android:paddingVertical="12dp"
         android:textSize="16sp" />
@@ -66,7 +66,7 @@
         android:id="@+id/generateNoNamesButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Generar sin nombres"
+        android:text="@string/generate_no_names"
         android:layout_marginTop="8dp"
         android:paddingVertical="12dp"
         android:textSize="16sp"
