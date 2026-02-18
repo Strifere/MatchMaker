@@ -60,7 +60,7 @@ class NamesActivity : AppCompatActivity() {
         }
 
         generateEmptyButton.setOnClickListener {
-            val nombres = (1..namesContainer.childCount).map { i -> i.toString() }
+            val nombres = List(numJugadores) { "J$it" }
             startTournament(tournamentName, numJugadores, nombres, numSets, includeSetsResults)
         }
     }
