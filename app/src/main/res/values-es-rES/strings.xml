@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Match Maker</string>
     <string name="introduce_cantidad_de_jugadores">Introduce cantidad de jugadores</string>
     <string name="siguiente">Siguiente</string>
     <string name="texto_entrada">Introduce los parámetros necesarios para definir la competición.</string>
@@ -16,7 +15,7 @@
     <string name="load_tournament">Cargar Torneo</string>
     <string name="delete_tournament">Eliminar Torneo</string>
     <string name="export_tournament">Exportar el torneo a un archivo JSON.</string>
-    <string name="player_name">Nombre del jugador</string>
+    <string name="player_name">Nombre del participante</string>
     <string name="played_games">PJ</string>
     <string name="won_games">PG</string>
     <string name="lost_games">PP</string>
@@ -24,13 +23,42 @@
     <string name="lost_sets">SC</string>
     <string name="points">Puntos</string>
     <string name="player_matches_button">Ver partidos</string>
-    <string name="player_placeholder">Jugador X</string>
+    <string name="player_placeholder">Participante X</string>
     <string name="round">Ronda X</string>
-    <string name="bye_player">Libre:</string>
+    <string name="bye_player">Descansa:</string>
     <string name="saved_tournaments">Torneos Guardados</string>
     <string name="tournament_title_indicator">Título del torneo:</string>
     <string name="tournament_name_default">Nuevo Torneo</string>
     <string name="tournament_title_hint">Introduzca el título del torneo</string>
-    <string name="number_of_players">Número de jugadores:</string>
-    <string name="number_of_players_hint">Num. jugadores</string>
+    <string name="number_of_players">Número de participantes:</string>
+    <string name="number_of_players_hint">Num. participantes</string>
+    <string name="buscar_ronda">Buscar ronda</string>
+    <string name="buscar_participante">Buscar partidos participante</string>
+    <string name="rondas">Rondas</string>
+    <string name="tabla_de_emparejamientos">Tabla de Emparejamientos</string>
+    <string name="firstSetsText">Al mejor de</string>
+    <string name="includeSetsResultsText">Incluir resultados de sets</string>
+    <string name="see_classification_text">Ver clasificación</string>
+    <string name="back">Atrás</string>
+    <string name="addSetButtonDescription">Permite al usuario añadir el resultado del partido</string>
+    <string name="roundsText">Lista de rondas</string>
+    <string name="playersText">Lista de participantes</string>
+    <string name="tableText">Tabla de resultados</string>
+    <string name="classificationText">Clasificación</string>
+    <string name="roundsDescription">Icono de lista rondas</string>
+    <string name="players">Participantes</string>
+    <string name="tournamentTitle">Torneo de Tennis de Mesa</string>
+    <string name="roundsListDescription">Ver lista de rondas</string>
+    <string name="playersIconDescription">Ver Lista de Participantes</string>
+    <string name="tableIconDescription">Ver Tabla de resultados</string>
+    <string name="classificationIconDescription">Ver Clasificación</string>
+    <string name="exitText">Salir del torneo</string>
+    <string name="about">Acerca de</string>
+    <string name="nav_header_subtitle">Crea y gestiona torneos round robin de tennis de mesa</string>
+    <string name="main_description">Crea un nuevo torneo o carga uno de la lista de torneos guardados. Importa un torneo con el botón superior derecho o abre el menú con el botón superior izquierdo.</string>
+    <string name="main_logo_description">Logo principal</string>
+    <string name="tournaments_list_button_desc">Abre la lista de torneos guardados</string>
+    <string name="importDescription">Importar un torneo desde un archivo JSON</string>
+    <string name="main_create_tournament_description">Crear torneo</string>
+    <string name="editTitleDescription">Editar título del torneo</string>
 </resources>

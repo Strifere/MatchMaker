@@ -1,94 +1,87 @@
 <resources>
-    <string name="app_name">Match Maker</string>
-    <string name="introduce_cantidad_de_jugadores">Introduce cantidad de jugadores</string>
-    <string name="siguiente">Siguiente</string>
-    <string name="texto_entrada">Introduce los parámetros necesarios para definir la competición.</string>
-    <string name="buscar_ronda">Buscar ronda</string>
-    <string name="buscar_participante">Buscar partidos participante</string>
-    <string name="ver_tabla">Ver Tabla</string>
-    <string name="rondas">Rondas</string>
-    <string name="tabla_de_emparejamientos">Tabla de Emparejamientos</string>
-    <string name="setsHint">Num. Sets (1, 3, 5, etc.)</string>
-    <string name="firstSetsText">Al mejor de</string>
-    <string name="secondSetsText">sets.</string>
-    <string name="includeSetsResultsText">Incluir resultados de sets</string>
-    <string name="see_classification_text">Ver clasificación</string>
-    <string name="back">Atrás</string>
+    <string name="app_name" translatable="false">Match Maker</string>
+    <string name="introduce_cantidad_de_jugadores">Input the number of players</string>
+    <string name="siguiente">Next</string>
+    <string name="texto_entrada">Input the necessary parameters to define the tournament.</string>
+    <string name="buscar_ronda">Search round</string>
+    <string name="buscar_participante">Search player matches</string>
+    <string name="rondas">Rounds</string>
+    <string name="setsHint" translatable="false">Num. Sets (1, 3, 5, etc.)</string>
+    <string name="secondSetsText" translatable="false">sets.</string>
+    <string name="back">Back</string>
     <string name="addSetButtonDescription">Lets the user add the result of the match</string>
-    <string name="clasificacion">Clasificación</string>
-    <string name="roundsText">Lista de rondas</string>
-    <string name="playersText">Lista de participantes</string>
-    <string name="tableText">Tabla de resultados</string>
-    <string name="classificationText">Clasificación</string>
-    <string name="roundsDescription">Icono de lista rondas</string>
-    <string name="players">Participantes</string>
-    <string name="samplePlayerText">PlayerNameHere</string>
-    <string name="separatorText">VS</string>
-    <string name="tournamentTitle">Torneo de Tennis de Mesa</string>
-    <string name="roundsListDescription">Ver lista de rondas</string>
-    <string name="playersIconDescription">Ver Lista de Participantes</string>
-    <string name="tableIconDescription">Ver Tabla de resultados</string>
-    <string name="classificationIconDescription">Ver Clasificación</string>
-    <string name="exitText">Salir del torneo</string>
-    <string name="title_activity_main">MainActivity</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
-    <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
+    <string name="roundsDescription">Rounds list icon</string>
+    <string name="separatorText" translatable="false">VS</string>
+    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
+    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
+    <string name="nav_header_title" translatable="false">Match Maker</string>
+    <string name="nav_header_subtitle">Create and manage table tennis round robin tournaments</string>
+    <string name="nav_header_desc" translatable="false">Navigation header</string>
 
-    <string name="menu_transform">Transform</string>
-    <string name="menu_reflow">Reflow</string>
-    <string name="menu_slideshow">Slideshow</string>
-    <string name="menu_settings">Settings</string>
+    <string name="menu_transform" translatable="false">Transform</string>
+    <string name="menu_reflow" translatable="false">Reflow</string>
+    <string name="menu_slideshow" translatable="false">Slideshow</string>
 
-    <string name="lorem_ipsum_title">Lorem Ipsum"</string>
-    <string name="lorem_ipsum">Lorem Ipsum is simply placeholder text of the printing and
+    <string name="lorem_ipsum_title" translatable="false">Lorem Ipsum"</string>
+    <string name="lorem_ipsum" translatable="false">Lorem Ipsum is simply placeholder text of the printing and
         typesetting industry. Lorem Ipsum has been the industry\'s standard placeholder text ever
         since the 1500s, when an unknown printer took a galley of type and scrambled it to make a
         type specimen book"
     </string>
-    <string name="fab_content_description">Represents a view to invoke an action</string>
-    <string name="image_view_item_transform_content_description">Represents an image view in the
+    <string name="fab_content_description" translatable="false">Represents a view to invoke an action</string>
+    <string name="image_view_item_transform_content_description" translatable="false">Represents an image view in the
         item
     </string>
-    <string name="main_description">Crea un nuevo torneo o abre el menu para explorar opciones.</string>
-    <string name="main_logo_description">Logo principal</string>
-    <string name="main_secondary_button_description">Accion secundaria</string>
-    <string name="main_create_tournament_description">Crear torneo</string>
-    <string name="tournamentHistory">Historial de torneos</string>
-    <string name="about">Acerca de</string>
-    <string name="importDescription">Importar un torneo desde un archivo JSON</string>
-    <string name="editTitleDescription">Editar título del torneo</string>
-    <string name="names_input_title">Introduce los nombres</string>
-    <string name="generate_tournament">Generar Torneo</string>
-    <string name="generate_no_names">Generar sin nombres</string>
-    <string name="tournament_name">Nombre del torneo</string>
-    <string name="tournament_creation_date">Fecha de creación:</string>
-    <string name="tournament_modification_date">Fecha de modificación:</string>
-    <string name="tournament_players_count">Cantidad de participantes</string>
-    <string name="best_of_sets">Al mejor de:</string>
-    <string name="include_set_results_card">Incluye resultado de sets / No incluye resultado de sets</string>
-    <string name="load_tournament">Cargar Torneo</string>
-    <string name="delete_tournament">Eliminar Torneo</string>
-    <string name="export_tournament">Exportar el torneo a un archivo JSON.</string>
-    <string name="player_name">Nombre del jugador</string>
-    <string name="ranking">Ranking</string>
-    <string name="played_games">PJ</string>
-    <string name="won_games">PG</string>
-    <string name="lost_games">PP</string>
-    <string name="won_sets">SF</string>
-    <string name="lost_sets">SC</string>
-    <string name="points">Puntos</string>
-    <string name="player_matches_button">Ver partidos</string>
-    <string name="player_placeholder">Jugador X</string>
-    <string name="round">Ronda X</string>
-    <string name="bye_player">Libre:</string>
-    <string name="saved_tournaments">Torneos Guardados</string>
-    <string name="tournament_title_indicator">Título del torneo:</string>
-    <string name="tournament_name_default">Nuevo Torneo</string>
-    <string name="tournament_title_hint">Introduzca el título del torneo</string>
-    <string name="number_of_players">Número de jugadores:</string>
-    <string name="number_of_players_hint">Num. jugadores</string>
+    <string name="tournaments_list_button_desc">Open the saved tournaments list</string>
+    <string name="names_input_title">Input the names</string>
+    <string name="generate_tournament">Generate Tournament</string>
+    <string name="generate_no_names">Generate without names</string>
+    <string name="tournament_name">Tournament name</string>
+    <string name="tournament_creation_date">Creation date:</string>
+    <string name="tournament_modification_date">Modification date:</string>
+    <string name="tournament_players_count">Number of players</string>
+    <string name="best_of_sets">Best of:</string>
+    <string name="load_tournament">Load Tournament</string>
+    <string name="delete_tournament">Delete Tournament</string>
+    <string name="player_name">Player name</string>
+    <string name="ranking" translatable="false">Ranking</string>
+    <string name="played_games">PG</string>
+    <string name="won_games">WG</string>
+    <string name="lost_games">LG</string>
+    <string name="won_sets">WS</string>
+    <string name="lost_sets">LS</string>
+    <string name="points">Score</string>
+    <string name="player_matches_button">See matches</string>
+    <string name="player_placeholder">Player X</string>
+    <string name="round">Round X</string>
+    <string name="bye_player">Bye:</string>
+    <string name="saved_tournaments">Saved Tournaments</string>
+    <string name="tournament_title_indicator">Tournament title:</string>
+    <string name="tournament_name_default">New Tournament</string>
+    <string name="tournament_title_hint">Write the title of the tournament</string>
+    <string name="number_of_players">Number of players:</string>
+    <string name="number_of_players_hint">Num. players</string>
+    <string name="include_set_results_card">Includes / Not includes set results</string>
+    <string name="export_tournament">Export tournament to a JSON file.</string>
+    <string name="tabla_de_emparejamientos">Pairings table</string>
+    <string name="firstSetsText">Best of</string>
+    <string name="includeSetsResultsText">Include set results</string>
+    <string name="see_classification_text">Classification</string>
+    <string name="roundsText">Rounds list</string>
+    <string name="playersText">Players list</string>
+    <string name="tableText">Results table</string>
+    <string name="classificationText">Classification</string>
+    <string name="players">Players</string>
+    <string name="tournamentTitle">Table Tennis Tournament</string>
+    <string name="roundsListDescription">See rounds list</string>
+    <string name="playersIconDescription">See players list</string>
+    <string name="tableIconDescription">See results table</string>
+    <string name="classificationIconDescription">See classification</string>
+    <string name="exitText">Exit tournament</string>
+    <string name="about">About</string>
+    <string name="main_description">Create a new tournament or load one from the saved tournaments list. Import a tournament with the upper right button or open the menu drawer with the upper left button.</string>
+    <string name="main_logo_description">Main Logo</string>
+    <string name="importDescription">Import a tournament from a JSON file</string>
+    <string name="main_create_tournament_description">Create tournament</string>
+    <string name="editTitleDescription">Edit tournament title</string>
 </resources>
